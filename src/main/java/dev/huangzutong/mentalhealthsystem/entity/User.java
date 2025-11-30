@@ -60,11 +60,5 @@ public class User{
     @TableField("avatar")
     private String avatar;
 
-    /**
-     * 角色ID
-     */
-    @TableField("role_id")
-    private String roleId;
-
 
 }

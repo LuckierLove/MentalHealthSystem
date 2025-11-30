@@ -19,8 +19,16 @@
         <sa-token.version>1.44.0</sa-token.version>
         <mybatis-plus.version>3.5.14</mybatis-plus.version>
         <fastjson.version>2.0.59</fastjson.version>
+        <hutool.version>5.8.41</hutool.version>
 	</properties>
 	<dependencies>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-boot3-starter</artifactId>
