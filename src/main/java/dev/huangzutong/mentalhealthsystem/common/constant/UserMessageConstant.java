@@ -11,4 +11,5 @@ public class UserMessageConstant {
     public static final String EMAIL_FORMAT_ERROR = "邮箱格式错误";
     public static final String USER_NOT_EXIST = "用户不存在";
     public static final String PASSWORD_ERROR = "密码错误";
+    public static final String NOT_LOGIN = "未登录";
 }

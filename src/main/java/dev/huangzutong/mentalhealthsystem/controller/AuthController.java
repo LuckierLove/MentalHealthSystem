@@ -23,6 +23,8 @@ public class AuthController {
     private IUserService userService;
     /**
      * 注册
+     * @param req 注册参数
+     * @return 注册结果
      */
     @PostMapping("/register")
     public Result<Void> register(@RequestBody RegisterReq req){
@@ -33,6 +35,8 @@ public class AuthController {
 
     /**
      * 登录
+     * @param req 登录参数
+     * @return 登录结果
      */
     @PostMapping("/login")
     public Result<Void> login(@RequestBody LoginReq req){

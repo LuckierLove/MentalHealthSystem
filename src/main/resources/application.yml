@@ -14,3 +14,7 @@ spring:
       port: 6379
       database: 0
       host: localhost
+# Mybatis-Plus配置
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

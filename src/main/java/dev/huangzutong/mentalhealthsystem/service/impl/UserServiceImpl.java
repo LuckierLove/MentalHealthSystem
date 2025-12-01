@@ -9,6 +9,7 @@ import dev.huangzutong.mentalhealthsystem.common.enums.UserRoleEnum;
 import dev.huangzutong.mentalhealthsystem.common.exception.UserException;
 import dev.huangzutong.mentalhealthsystem.entity.User;
 import dev.huangzutong.mentalhealthsystem.entity.UserRole;
+import dev.huangzutong.mentalhealthsystem.entity.req.CreateUserReq;
 import dev.huangzutong.mentalhealthsystem.entity.req.LoginReq;
 import dev.huangzutong.mentalhealthsystem.entity.req.RegisterReq;
 import dev.huangzutong.mentalhealthsystem.mapper.UserMapper;
@@ -16,6 +17,7 @@ import dev.huangzutong.mentalhealthsystem.mapper.UserRoleMapper;
 import dev.huangzutong.mentalhealthsystem.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,6 +76,45 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         // 登录
         StpUtil.login(user.getId());
+    }
+
+    /**
+     * 创建用户
+     * @param req 创建用户请求参数
+     */
+    @Transactional
+    @Override
+    public void createUser(CreateUserReq req) {
+        RegisterReq registerReq = new RegisterReq();
+        BeanUtils.copyProperties(req, registerReq);
+        validateRegisterReq(registerReq);
+        User user = new User()
+                .setId(new SnowflakeGenerator().next().toString())
+                .setUsername(req.getUsername())
+                .setPassword(new BCryptPasswordEncoder().encode(req.getPassword()))
+                .setNickname(req.getNickname())
+                .setRealName(req.getRealName())
+                .setEmail(req.getEmail())
+                .setAvatar(req.getAvatar());
+        // 保存用户
+        save(user);
+
+        // 保存用户角色
+        userRoleMapper.insert(new UserRole()
+                .setUserId(user.getId())
+                .setRoleId(UserRoleEnum.STUDENT.getId())
+        );
+    }
+
+    /**
+     * 删除用户
+     * @param userId 用户id
+     */
+    @Transactional
+    @Override
+    public void delete(Long userId) {
+        removeById(userId);
+        userRoleMapper.delete(new QueryWrapper<UserRole>().eq("user_id", userId));
     }
 
     /**

@@ -2,16 +2,16 @@ package dev.huangzutong.mentalhealthsystem.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class WebConfiguration extends WebMvcConfigurationSupport {
+public class WebConfiguration implements WebMvcConfigurer {
 
     /**
      * 添加静态资源文件，外部可以直接访问地址
      */
     @Override
-    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/avatar/**").
                 addResourceLocations("file:avatar");
         registry.addResourceHandler("/**").
@@ -21,6 +21,5 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
                         "classpath:/resources",
                         "classpath:/META-INF/resources"
                 });
-        super.addResourceHandlers(registry);
     }
 }
