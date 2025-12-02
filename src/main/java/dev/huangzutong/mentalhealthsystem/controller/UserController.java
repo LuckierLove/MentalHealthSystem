@@ -5,6 +5,7 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.stp.StpUtil;
 import dev.huangzutong.mentalhealthsystem.common.Result;
 import dev.huangzutong.mentalhealthsystem.entity.req.CreateUserReq;
+import dev.huangzutong.mentalhealthsystem.entity.vo.GetUserInfoVO;
 import dev.huangzutong.mentalhealthsystem.service.IUserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -40,10 +41,22 @@ public class UserController {
      */
     @DeleteMapping("/{user_id}")
     @SaCheckPermission(value = "user:delete", orRole = "管理员")
-    public Result<Void> deleteUser(@PathVariable("user_id") Long userId) {
+    public Result<Void> deleteUser(@PathVariable("user_id") String userId) {
         log.info("删除用户 {}", userId);
         log.info("当前用户权限 {}", StpUtil.getPermissionList());
         userService.delete(userId);
         return Result.success();
+    }
+
+    /**
+     * 获取用户信息
+     * @param userId 用户ID
+     * @return 用户信息
+     */
+    @GetMapping("/{user_id}")
+    public Result<GetUserInfoVO> getUserInfo(@PathVariable("user_id") String userId) {
+        log.info("获取用户信息 {}", userId);
+        GetUserInfoVO userInfo = userService.getUserInfo(userId);
+        return Result.success(userInfo);
     }
 }

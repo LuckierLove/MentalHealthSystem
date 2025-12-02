@@ -12,12 +12,15 @@ import dev.huangzutong.mentalhealthsystem.entity.UserRole;
 import dev.huangzutong.mentalhealthsystem.entity.req.CreateUserReq;
 import dev.huangzutong.mentalhealthsystem.entity.req.LoginReq;
 import dev.huangzutong.mentalhealthsystem.entity.req.RegisterReq;
+import dev.huangzutong.mentalhealthsystem.entity.vo.GetUserInfoVO;
+import dev.huangzutong.mentalhealthsystem.mapper.RoleMapper;
 import dev.huangzutong.mentalhealthsystem.mapper.UserMapper;
 import dev.huangzutong.mentalhealthsystem.mapper.UserRoleMapper;
 import dev.huangzutong.mentalhealthsystem.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +32,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
     @Resource
     private UserRoleMapper userRoleMapper;
+    @Resource
+    private RoleMapper roleMapper;
 
     /**
      * 注册
@@ -112,9 +117,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     @Transactional
     @Override
-    public void delete(Long userId) {
+    public void delete(String userId) {
         removeById(userId);
         userRoleMapper.delete(new QueryWrapper<UserRole>().eq("user_id", userId));
+    }
+
+    /**
+     * 获取用户信息
+     * @param userId 用户id
+     * @return 用户信息
+     */
+    @Override
+    public GetUserInfoVO getUserInfo(String userId) {
+        GetUserInfoVO userInfo = new GetUserInfoVO();
+        BeanUtils.copyProperties(getById(userId), userInfo);
+        String roleId = userRoleMapper.selectOne(new QueryWrapper<UserRole>().eq("user_id", userId)).getRoleId();
+        String roleName = roleMapper.selectById(roleId).getName();
+        userInfo.setRole(roleName);
+        return userInfo;
     }
 
     /**

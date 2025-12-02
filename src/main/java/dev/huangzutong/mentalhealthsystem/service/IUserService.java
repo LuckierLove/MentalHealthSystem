@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import dev.huangzutong.mentalhealthsystem.entity.req.CreateUserReq;
 import dev.huangzutong.mentalhealthsystem.entity.req.LoginReq;
 import dev.huangzutong.mentalhealthsystem.entity.req.RegisterReq;
+import dev.huangzutong.mentalhealthsystem.entity.vo.GetUserInfoVO;
 
 /**
  * 基础用户表 服务类
@@ -33,5 +34,12 @@ public interface IUserService extends IService<User> {
      * 删除用户
      * @param userId 用户ID
      */
-    void delete(Long userId);
+    void delete(String userId);
+
+    /**
+     * 获取用户信息
+     * @param userId 用户ID
+     * @return 用户信息
+     */
+    GetUserInfoVO getUserInfo(String userId);
 }
