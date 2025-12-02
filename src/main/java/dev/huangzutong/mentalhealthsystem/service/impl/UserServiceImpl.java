@@ -138,6 +138,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     /**
+     * 更新用户信息
+     * @param userId 用户id
+     * @param req 更新用户信息请求参数
+     */
+    @Override
+    public void updateUser(String userId, CreateUserReq req) {
+        User user = new User();
+        BeanUtils.copyProperties(req, user);
+        user.setId(userId);
+        updateById(user);
+    }
+
+    /**
      * 校验注册请求参数
      * @param req 注册请求参数
      */

@@ -59,4 +59,11 @@ public class UserController {
         GetUserInfoVO userInfo = userService.getUserInfo(userId);
         return Result.success(userInfo);
     }
+
+    @PutMapping("/{user_id}")
+    public Result<Void> updateUser(@PathVariable("user_id") String userId, @RequestBody CreateUserReq req) {
+        log.info("更新用户 {}", userId);
+        userService.updateUser(userId, req);
+        return Result.success();
+    }
 }

@@ -42,4 +42,11 @@ public interface IUserService extends IService<User> {
      * @return 用户信息
      */
     GetUserInfoVO getUserInfo(String userId);
+
+    /**
+     * 更新用户信息
+     * @param userId 用户ID
+     * @param req 更新用户信息请求参数
+     */
+    void updateUser(String userId, CreateUserReq req);
 }
