@@ -4,6 +4,8 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.lang.Validator;
 import cn.hutool.core.lang.generator.SnowflakeGenerator;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import dev.huangzutong.mentalhealthsystem.common.constant.UserMessageConstant;
 import dev.huangzutong.mentalhealthsystem.common.enums.UserRoleEnum;
 import dev.huangzutong.mentalhealthsystem.common.exception.UserException;
@@ -13,6 +15,7 @@ import dev.huangzutong.mentalhealthsystem.entity.req.CreateUserReq;
 import dev.huangzutong.mentalhealthsystem.entity.req.LoginReq;
 import dev.huangzutong.mentalhealthsystem.entity.req.RegisterReq;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetUserInfoVO;
+import dev.huangzutong.mentalhealthsystem.entity.vo.GetUserListVO;
 import dev.huangzutong.mentalhealthsystem.mapper.RoleMapper;
 import dev.huangzutong.mentalhealthsystem.mapper.UserMapper;
 import dev.huangzutong.mentalhealthsystem.mapper.UserRoleMapper;
@@ -25,6 +28,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * 基础用户表 服务实现类
  */
@@ -34,6 +39,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private UserRoleMapper userRoleMapper;
     @Resource
     private RoleMapper roleMapper;
+    @Resource
+    private UserMapper userMapper;
 
     /**
      * 注册
@@ -149,6 +156,38 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setId(userId);
         updateById(user);
     }
+
+    /**
+     * 获取所有用户信息
+     * @param page 页码
+     * @param pageSize 页大小
+     * @param keyword 昵称关键字
+     * @return 所有用户信息
+     */
+    @Override
+    public GetUserListVO listUser(Long page, Long pageSize, String keyword) {
+        // 构建查询条件
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like(StringUtils.isNotBlank(keyword), "nickname", keyword);
+        Page<User> pageParam = new Page<>(page, pageSize);
+        Page<User> userPage = userMapper.selectPage(pageParam, queryWrapper);
+
+
+        GetUserListVO getUserListVO = new GetUserListVO();
+        getUserListVO.setTotal(userPage.getTotal());
+        getUserListVO.setPage(userPage.getCurrent());
+
+        getUserListVO.setRecords(userPage.getRecords().stream().map(user -> {
+            GetUserInfoVO userInfo = new GetUserInfoVO();
+            BeanUtils.copyProperties(user, userInfo);
+            String roleId = userRoleMapper.selectOne(new QueryWrapper<UserRole>().eq("user_id", user.getId())).getRoleId();
+            String roleName = roleMapper.selectById(roleId).getName();
+            userInfo.setRole(roleName);
+            return userInfo;
+        }).toList());
+        return getUserListVO;
+    }
+
 
     /**
      * 校验注册请求参数

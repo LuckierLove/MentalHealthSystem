@@ -6,6 +6,9 @@ import dev.huangzutong.mentalhealthsystem.entity.req.CreateUserReq;
 import dev.huangzutong.mentalhealthsystem.entity.req.LoginReq;
 import dev.huangzutong.mentalhealthsystem.entity.req.RegisterReq;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetUserInfoVO;
+import dev.huangzutong.mentalhealthsystem.entity.vo.GetUserListVO;
+
+import java.util.List;
 
 /**
  * 基础用户表 服务类
@@ -49,4 +52,13 @@ public interface IUserService extends IService<User> {
      * @param req 更新用户信息请求参数
      */
     void updateUser(String userId, CreateUserReq req);
+
+    /**
+     * 获取用户列表
+     * @param page 页码
+     * @param pageSize 页大小
+     * @param keyword 昵称关键词
+     * @return 用户列表
+     */
+    GetUserListVO listUser(Long page, Long pageSize, String keyword);
 }
