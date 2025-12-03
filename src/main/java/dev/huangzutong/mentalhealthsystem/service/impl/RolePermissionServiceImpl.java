@@ -47,4 +47,21 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
                 .toList();
         rolePermissionMapper.insert(rolePermissionList);
     }
+
+    /**
+     * 删除角色权限
+     * @param roleId        角色ID
+     * @param permission 权限列表
+     */
+    @Override
+    public void deleteRolePermission(String roleId, List<String> permission) {
+        permission.stream()
+                .map(p -> new RolePermission()
+                        .setPermission(p)
+                        .setRoleId(roleId))
+                .forEach(it -> rolePermissionMapper.delete(
+                        new QueryWrapper<RolePermission>().eq("role_id", it.getRoleId())
+                                .eq("permission", it.getPermission())
+                ));
+    }
 }

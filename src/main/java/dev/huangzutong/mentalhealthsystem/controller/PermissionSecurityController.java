@@ -63,4 +63,20 @@ public class PermissionSecurityController {
         rolePermissionService.addRolePermission(role_id, req.getPermission());
         return Result.success();
     }
+
+    /**
+     * 删除角色权限
+     *
+     * @param role_id        角色ID
+     * @param req 删除权限请求参数
+     * @return 删除结果
+     */
+    @SaCheckPermission(value = "permission:delete", orRole = "管理员")
+    @DeleteMapping("/{role_id}")
+    public Result<Void> deleteRolePermission(@PathVariable String role_id, @RequestBody AddPermissionReq req) {
+        log.info("删除角色权限：{}", role_id);
+        log.info("删除角色权限 当前用户权限: {}", StpUtil.getPermissionList());
+        rolePermissionService.deleteRolePermission(role_id, req.getPermission());
+        return Result.success();
+    }
 }
