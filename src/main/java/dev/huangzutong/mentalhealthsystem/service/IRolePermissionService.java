@@ -30,4 +30,11 @@ public interface IRolePermissionService extends IService<RolePermission> {
      * @param permission 权限列表
      */
     void deleteRolePermission(String roleId, List<String> permission);
+
+    /**
+     * 更新角色权限
+     * @param roleId 角色ID
+     * @param permission 权限列表
+     */
+    void updatePermission(String roleId, List<String> permission);
 }

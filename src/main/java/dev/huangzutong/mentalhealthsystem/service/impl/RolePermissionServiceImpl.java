@@ -7,6 +7,7 @@ import dev.huangzutong.mentalhealthsystem.service.IRolePermissionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -63,5 +64,17 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
                         new QueryWrapper<RolePermission>().eq("role_id", it.getRoleId())
                                 .eq("permission", it.getPermission())
                 ));
+    }
+
+    /**
+     * 更新角色权限
+     * @param roleId        角色ID
+     * @param permission 权限列表
+     */
+    @Transactional
+    @Override
+    public void updatePermission(String roleId, List<String> permission) {
+        rolePermissionMapper.delete(new QueryWrapper<RolePermission>().eq("role_id", roleId));
+        addRolePermission(roleId, permission);
     }
 }
