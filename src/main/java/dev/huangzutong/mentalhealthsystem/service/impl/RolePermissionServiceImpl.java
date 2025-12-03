@@ -32,4 +32,19 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
                 .map(RolePermission::getPermission)
                 .toList();
     }
+
+    /**
+     * 添加角色权限
+     * @param roleId        角色ID
+     * @param permissionList 权限列表
+     */
+    @Override
+    public void addRolePermission(String roleId, List<String> permissionList) {
+        List<RolePermission> rolePermissionList = permissionList.stream()
+                .map(permission -> new RolePermission()
+                        .setPermission(permission)
+                        .setRoleId(roleId))
+                .toList();
+        rolePermissionMapper.insert(rolePermissionList);
+    }
 }

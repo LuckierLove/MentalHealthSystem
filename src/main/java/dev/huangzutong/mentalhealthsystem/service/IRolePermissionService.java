@@ -16,4 +16,11 @@ public interface IRolePermissionService extends IService<RolePermission> {
      * @return 权限列表
      */
     List<String> getPermissionByRoleId(String roleId);
+
+    /**
+     * 添加角色权限
+     * @param roleId 角色ID
+     * @param permissionList 权限列表
+     */
+    void addRolePermission(String roleId, List<String> permissionList);
 }
