@@ -25,6 +25,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(SaTokenException.class)
     public String handleSaTokenException(SaTokenException e) {
+        e.printStackTrace();
         return JSONObject.toJSONString(Result.failed(e.getMessage()));
     }
 }

@@ -17,6 +17,7 @@ public class SatokenConfiguration implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/auth/login")
                 .excludePathPatterns("/auth/register")
-                .excludePathPatterns("/avatar/**");
+                .excludePathPatterns("/avatar/**")
+                .excludePathPatterns("/error");
     }
 }

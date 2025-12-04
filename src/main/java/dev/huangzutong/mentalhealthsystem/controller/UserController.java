@@ -22,6 +22,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/user")
+@SaCheckLogin
 public class UserController {
     @Resource
     private IUserService userService;

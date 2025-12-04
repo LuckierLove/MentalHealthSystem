@@ -1,5 +1,6 @@
 package dev.huangzutong.mentalhealthsystem.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.stp.StpUtil;
 import dev.huangzutong.mentalhealthsystem.common.Result;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * 预约相关接口
  */
-@SaCheckPermission
+@SaCheckLogin
 @RestController
 @RequestMapping("/appointment")
 @Slf4j
