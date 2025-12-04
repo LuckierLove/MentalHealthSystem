@@ -114,7 +114,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         // 保存用户角色
         userRoleMapper.insert(new UserRole()
                 .setUserId(user.getId())
-                .setRoleId(UserRoleEnum.STUDENT.getId())
+                .setRoleId(req.getRoleId())
         );
     }
 

@@ -1,6 +1,9 @@
 package dev.huangzutong.mentalhealthsystem.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.lang.generator.SnowflakeGenerator;
 import dev.huangzutong.mentalhealthsystem.entity.Appointment;
+import dev.huangzutong.mentalhealthsystem.entity.req.CreateAppointmentReq;
 import dev.huangzutong.mentalhealthsystem.mapper.AppointmentMapper;
 import dev.huangzutong.mentalhealthsystem.service.IAppointmentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -12,4 +15,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appointment> implements IAppointmentService {
 
+    /**
+     * 添加预约
+     * @param req 添加预约请求参数
+     */
+    @Override
+    public void addAppointment(CreateAppointmentReq req) {
+        String studentId = StpUtil.getLoginId().toString();
+        Appointment appointment = Appointment.builder()
+                .id(new SnowflakeGenerator().next())
+                .counselorId(req.getCounselorId())
+                .studentId(studentId)
+                .appointmentTime(req.getAppointmentTime())
+                .type(req.getType())
+                .status(1)
+                .rating(5)
+                .build();
+        save(appointment);
+    }
 }
