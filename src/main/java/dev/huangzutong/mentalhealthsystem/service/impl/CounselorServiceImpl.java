@@ -2,10 +2,13 @@ package dev.huangzutong.mentalhealthsystem.service.impl;
 
 import cn.hutool.core.lang.generator.SnowflakeGenerator;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import dev.huangzutong.mentalhealthsystem.entity.Counselor;
 import dev.huangzutong.mentalhealthsystem.entity.Role;
 import dev.huangzutong.mentalhealthsystem.entity.UserRole;
 import dev.huangzutong.mentalhealthsystem.entity.req.AddCounselorReq;
+import dev.huangzutong.mentalhealthsystem.entity.vo.GetCounselorListVO;
 import dev.huangzutong.mentalhealthsystem.mapper.CounselorMapper;
 import dev.huangzutong.mentalhealthsystem.mapper.RoleMapper;
 import dev.huangzutong.mentalhealthsystem.mapper.UserRoleMapper;
@@ -73,6 +76,27 @@ public class CounselorServiceImpl extends ServiceImpl<CounselorMapper, Counselor
         BeanUtils.copyProperties(req, counselor);
         counselor.setId(id);
         updateById(counselor);
+    }
+
+    /**
+     * 获取咨询师列表
+     *
+     * @param page 页码
+     * @param pageSize 页大小
+     * @param keyword 姓名关键字
+     * @return 咨询师列表
+     */
+    @Override
+    public GetCounselorListVO getCounselorList(Long page, Long pageSize, String keyword) {
+        QueryWrapper<Counselor> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like(StringUtils.isNotBlank(keyword), "name", keyword);
+        Page<Counselor> pageHelper = new Page<>(page, pageSize);
+        counselorMapper.selectPage(pageHelper, queryWrapper);
+        GetCounselorListVO vo = new GetCounselorListVO();
+        vo.setPage(pageHelper.getCurrent())
+                .setTotal(pageHelper.getTotal())
+                .setRecords(pageHelper.getRecords());
+        return vo;
     }
 
     /**

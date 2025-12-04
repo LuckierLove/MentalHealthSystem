@@ -3,6 +3,7 @@ package dev.huangzutong.mentalhealthsystem.service;
 import dev.huangzutong.mentalhealthsystem.entity.Counselor;
 import com.baomidou.mybatisplus.extension.service.IService;
 import dev.huangzutong.mentalhealthsystem.entity.req.AddCounselorReq;
+import dev.huangzutong.mentalhealthsystem.entity.vo.GetCounselorListVO;
 
 /**
  * 咨询师表 服务类
@@ -27,4 +28,13 @@ public interface ICounselorService extends IService<Counselor> {
      * @param req 更新咨询师请求参数
      */
     void updateCounselor(String id, AddCounselorReq req);
+
+    /**
+     * 获取咨询师列表
+     * @param page 页码
+     * @param pageSize 页大小
+     * @param keyword 姓名关键字
+     * @return 咨询师列表
+     */
+    GetCounselorListVO getCounselorList(Long page, Long pageSize, String keyword);
 }
