@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.lang.generator.SnowflakeGenerator;
 import dev.huangzutong.mentalhealthsystem.entity.TreeholePost;
 import dev.huangzutong.mentalhealthsystem.entity.req.AddPostReq;
+import dev.huangzutong.mentalhealthsystem.entity.vo.GetTreeholePostVO;
 import dev.huangzutong.mentalhealthsystem.mapper.TreeholePostMapper;
 import dev.huangzutong.mentalhealthsystem.service.ITreeholePostService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -32,5 +33,19 @@ public class TreeholePostServiceImpl extends ServiceImpl<TreeholePostMapper, Tre
         treeholePost.setPostTime(LocalDateTime.now());
         treeholePost.setPass(0);
         save(treeholePost);
+    }
+
+    /**
+     * 获取树洞帖子详情
+     *
+     * @param id 帖子ID
+     * @return 树洞帖子详情
+     */
+    @Override
+    public GetTreeholePostVO getTreeholePost(Long id) {
+        TreeholePost treeholePost = getById(id);
+        GetTreeholePostVO getTreeholePostVO = new GetTreeholePostVO();
+        BeanUtils.copyProperties(treeholePost, getTreeholePostVO);
+        return getTreeholePostVO;
     }
 }
