@@ -2,6 +2,7 @@ package dev.huangzutong.mentalhealthsystem.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import dev.huangzutong.mentalhealthsystem.common.Result;
+import dev.huangzutong.mentalhealthsystem.entity.Appointment;
 import dev.huangzutong.mentalhealthsystem.entity.req.CreateAppointmentReq;
 import dev.huangzutong.mentalhealthsystem.service.IAppointmentService;
 import jakarta.annotation.Resource;
@@ -41,5 +42,16 @@ public class AppointmentController {
         log.info("删除预约 {}", id);
         appointmentService.removeById(id);
         return Result.success();
+    }
+
+    /**
+     * 获取预约详情
+     * @param id 预约id
+     * @return 预约详情
+     */
+    @GetMapping("/{id}")
+    public Result<Appointment> getAppointment(@PathVariable Long id) {
+        log.info("获取预约详情 {}", id);
+        return Result.success(appointmentService.getById(id));
     }
 }
