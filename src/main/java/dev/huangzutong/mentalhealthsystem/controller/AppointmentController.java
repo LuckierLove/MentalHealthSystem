@@ -54,4 +54,17 @@ public class AppointmentController {
         log.info("获取预约详情 {}", id);
         return Result.success(appointmentService.getById(id));
     }
+
+    /**
+     * 更新预约
+     * @param id 预约id
+     * @param req 更新预约请求参数
+     * @return 更新结果
+     */
+    @PutMapping("/{id}")
+    public Result<Void> updateAppointment(@PathVariable Long id, @RequestBody CreateAppointmentReq req) {
+        log.info("更新预约 {}", req);
+        appointmentService.updateAppointment(id, req);
+        return Result.success();
+    }
 }

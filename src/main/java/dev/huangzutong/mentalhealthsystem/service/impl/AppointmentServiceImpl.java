@@ -7,6 +7,8 @@ import dev.huangzutong.mentalhealthsystem.entity.req.CreateAppointmentReq;
 import dev.huangzutong.mentalhealthsystem.mapper.AppointmentMapper;
 import dev.huangzutong.mentalhealthsystem.service.IAppointmentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 /**
@@ -32,5 +34,18 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
                 .rating(5)
                 .build();
         save(appointment);
+    }
+
+    /**
+     * 更新预约
+     * @param id 预约id
+     * @param req 更新预约请求参数
+     */
+    @Override
+    public void updateAppointment(Long id, CreateAppointmentReq req) {
+        Appointment appointment = new Appointment();
+        appointment.setId(id);
+        BeanUtils.copyProperties(req, appointment);
+        updateById(appointment);
     }
 }
