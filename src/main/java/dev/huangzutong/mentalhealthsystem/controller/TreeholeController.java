@@ -77,4 +77,16 @@ public class TreeholeController {
         treeholePostService.updatePost(id, req);
         return Result.success();
     }
+
+    /**
+     * 删除树洞帖子
+     * @param id 帖子ID
+     * @return 删除结果
+     */
+    @DeleteMapping("/post/{id}")
+    public Result<Void> deletePost(@PathVariable Long id){
+        log.info("删除树洞帖子：{}", id);
+        treeholePostService.removeById(id);
+        return Result.success();
+    }
 }
