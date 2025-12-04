@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import dev.huangzutong.mentalhealthsystem.entity.TreeholePost;
 import dev.huangzutong.mentalhealthsystem.entity.req.AddPostReq;
+import dev.huangzutong.mentalhealthsystem.entity.req.UpdatePostReq;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetListVO;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetTreeholePostVO;
 import dev.huangzutong.mentalhealthsystem.mapper.TreeholePostMapper;
@@ -53,11 +54,8 @@ public class TreeholePostServiceImpl extends ServiceImpl<TreeholePostMapper, Tre
      * @return 树洞帖子详情
      */
     @Override
-    public GetTreeholePostVO getTreeholePost(Long id) {
-        TreeholePost treeholePost = getById(id);
-        GetTreeholePostVO getTreeholePostVO = new GetTreeholePostVO();
-        BeanUtils.copyProperties(treeholePost, getTreeholePostVO);
-        return getTreeholePostVO;
+    public TreeholePost getTreeholePost(Long id) {
+        return getById(id);
     }
 
     /**
@@ -70,7 +68,7 @@ public class TreeholePostServiceImpl extends ServiceImpl<TreeholePostMapper, Tre
      * @return 树洞帖子列表
      */
     @Override
-    public GetListVO<List<GetTreeholePostVO>> getPostList(Integer page, Integer pageSize, String keyword, Integer pass) {
+    public GetListVO<List<TreeholePost>> getPostList(Integer page, Integer pageSize, String keyword, Integer pass) {
         QueryWrapper<TreeholePost> queryWrapper = new QueryWrapper<>();
         queryWrapper.like(StringUtils.isNotBlank(keyword), "title", keyword);
         queryWrapper.eq(pass != null, "pass", pass);
@@ -78,18 +76,26 @@ public class TreeholePostServiceImpl extends ServiceImpl<TreeholePostMapper, Tre
         Page<TreeholePost> pageHelper = new Page<>(page, pageSize);
         treeholePostMapper.selectPage(pageHelper, queryWrapper);
 
-        GetListVO<List<GetTreeholePostVO>> getListVO = new GetListVO<>();
+        GetListVO<List<TreeholePost>> getListVO = new GetListVO<>();
         getListVO.setTotal(pageHelper.getTotal());
         getListVO.setPage(pageHelper.getCurrent());
         getListVO.setRecords(
                 pageHelper.getRecords()
-                        .stream()
-                        .map(treeholePost -> {
-                            GetTreeholePostVO getTreeholePostVO = new GetTreeholePostVO();
-                            BeanUtils.copyProperties(treeholePost, getTreeholePostVO);
-                            return getTreeholePostVO;
-                        }).toList()
         );
         return getListVO;
+    }
+
+    /**
+     * 更新树洞帖子
+     *
+     * @param id 树洞帖子ID
+     * @param req 更新树洞帖子参数
+     */
+    @Override
+    public void updatePost(Long id, UpdatePostReq req) {
+        TreeholePost treeholePost = new TreeholePost();
+        BeanUtils.copyProperties(req, treeholePost);
+        treeholePost.setId(id.toString());
+        updateById(treeholePost);
     }
 }

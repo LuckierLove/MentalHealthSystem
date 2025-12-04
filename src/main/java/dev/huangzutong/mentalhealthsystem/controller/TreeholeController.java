@@ -4,6 +4,7 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import dev.huangzutong.mentalhealthsystem.common.Result;
 import dev.huangzutong.mentalhealthsystem.entity.TreeholePost;
 import dev.huangzutong.mentalhealthsystem.entity.req.AddPostReq;
+import dev.huangzutong.mentalhealthsystem.entity.req.UpdatePostReq;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetListVO;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetTreeholePostVO;
 import dev.huangzutong.mentalhealthsystem.service.ITreeholePostService;
@@ -36,8 +37,13 @@ public class TreeholeController {
         return Result.success();
     }
 
+    /**
+     * 获取树洞帖子详情
+     * @param id 帖子ID
+     * @return 树洞帖子详情
+     */
     @GetMapping("/post/{id}")
-    public Result<GetTreeholePostVO> getPost(@PathVariable Long id){
+    public Result<TreeholePost> getPost(@PathVariable Long id){
         log.info("获取树洞帖子详情：{}", id);
         return Result.success(treeholePostService.getTreeholePost(id));
     }
@@ -51,11 +57,24 @@ public class TreeholeController {
      * @return 树洞帖子列表
      */
     @GetMapping("/post/list")
-    public Result<GetListVO<List<GetTreeholePostVO>>> getPostList(@RequestParam(defaultValue = "1") Integer page,
+    public Result<GetListVO<List<TreeholePost>>> getPostList(@RequestParam(defaultValue = "1") Integer page,
                                                                   @RequestParam(defaultValue = "10") Integer pageSize,
                                                                   @RequestParam(required = false) String keyword,
                                                                   @RequestParam(required = false) Integer pass){
         log.info("获取树洞帖子列表：{}", page);
         return Result.success(treeholePostService.getPostList(page, pageSize, keyword, pass));
+    }
+
+    /**
+     * 更新树洞帖子
+     * @param id 帖子ID
+     * @param req 更新参数
+     * @return 更新结果
+     */
+    @PutMapping("/post/{id}")
+    public Result<Void> updatePost(@PathVariable Long id, @RequestBody UpdatePostReq req){
+        log.info("更新树洞帖子：{}", req);
+        treeholePostService.updatePost(id, req);
+        return Result.success();
     }
 }
