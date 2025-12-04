@@ -5,11 +5,13 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import dev.huangzutong.mentalhealthsystem.common.Result;
 import dev.huangzutong.mentalhealthsystem.entity.Counselor;
 import dev.huangzutong.mentalhealthsystem.entity.req.AddCounselorReq;
-import dev.huangzutong.mentalhealthsystem.entity.vo.GetCounselorListVO;
+import dev.huangzutong.mentalhealthsystem.entity.vo.GetListVO;
 import dev.huangzutong.mentalhealthsystem.service.ICounselorService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 咨询师相关接口
@@ -86,11 +88,11 @@ public class CounselorController {
      * @return 咨询师列表
      */
     @GetMapping("/list")
-    public Result<GetCounselorListVO> getCounselorList(@RequestParam(defaultValue = "1", required = false) Long page,
-                                                        @RequestParam(defaultValue = "10", required = false) Long pageSize,
-                                                       @RequestParam(required = false) String keyword) {
+    public Result<GetListVO<List<Counselor>>> getCounselorList(@RequestParam(defaultValue = "1", required = false) Long page,
+                                                               @RequestParam(defaultValue = "10", required = false) Long pageSize,
+                                                               @RequestParam(required = false) String keyword) {
         log.info("获取咨询师列表 {} {} {}", page, pageSize, keyword);
-        GetCounselorListVO vo = counselorService.getCounselorList(page, pageSize, keyword);
+        GetListVO<List<Counselor>> vo = counselorService.getCounselorList(page, pageSize, keyword);
         return Result.success(vo);
     }
 }

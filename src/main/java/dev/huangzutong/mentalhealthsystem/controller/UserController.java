@@ -5,6 +5,7 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.stp.StpUtil;
 import dev.huangzutong.mentalhealthsystem.common.Result;
 import dev.huangzutong.mentalhealthsystem.entity.req.CreateUserReq;
+import dev.huangzutong.mentalhealthsystem.entity.vo.GetListVO;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetUserInfoVO;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetUserListVO;
 import dev.huangzutong.mentalhealthsystem.service.IUserService;
@@ -85,9 +86,9 @@ public class UserController {
      */
     @GetMapping("/list")
     @SaCheckPermission(value = "user:list", orRole = "管理员")
-    public Result<GetUserListVO> listUser(@RequestParam(required = false, defaultValue = "1") Long page,
-                                          @RequestParam(required = false, defaultValue = "10")Long pageSize,
-                                          @RequestParam(required = false) String keyword) {
+    public Result<GetListVO<List<GetUserInfoVO>>> listUser(@RequestParam(required = false, defaultValue = "1") Long page,
+                                                           @RequestParam(required = false, defaultValue = "10")Long pageSize,
+                                                           @RequestParam(required = false) String keyword) {
         log.info("获取用户列表 当前用户权限: {}", StpUtil.getPermissionList());
         log.info("获取用户列表 当前用户角色: {}", StpUtil.getRoleList());
         return Result.success(userService.listUser(page, pageSize, keyword));

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import dev.huangzutong.mentalhealthsystem.entity.req.CreateUserReq;
 import dev.huangzutong.mentalhealthsystem.entity.req.LoginReq;
 import dev.huangzutong.mentalhealthsystem.entity.req.RegisterReq;
+import dev.huangzutong.mentalhealthsystem.entity.vo.GetListVO;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetUserInfoVO;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetUserListVO;
 
@@ -60,5 +61,5 @@ public interface IUserService extends IService<User> {
      * @param keyword 昵称关键词
      * @return 用户列表
      */
-    GetUserListVO listUser(Long page, Long pageSize, String keyword);
+    GetListVO<List<GetUserInfoVO>> listUser(Long page, Long pageSize, String keyword);
 }

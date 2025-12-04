@@ -2,20 +2,30 @@ package dev.huangzutong.mentalhealthsystem.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.lang.generator.SnowflakeGenerator;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import dev.huangzutong.mentalhealthsystem.entity.Appointment;
 import dev.huangzutong.mentalhealthsystem.entity.req.CreateAppointmentReq;
+import dev.huangzutong.mentalhealthsystem.entity.vo.GetListVO;
 import dev.huangzutong.mentalhealthsystem.mapper.AppointmentMapper;
 import dev.huangzutong.mentalhealthsystem.service.IAppointmentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 预约表 服务实现类
  */
 @Service
 public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appointment> implements IAppointmentService {
+
+    @Resource
+    private AppointmentMapper appointmentMapper;
 
     /**
      * 添加预约
@@ -47,5 +57,23 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
         appointment.setId(id);
         BeanUtils.copyProperties(req, appointment);
         updateById(appointment);
+    }
+
+    /**
+     * 获取预约列表
+     * @param page 页码
+     * @param pageSize 页大小
+     * @param studentId 学生ID
+     * @param counselorId 咨询师ID
+     * @return 预约列表
+     */
+    @Override
+    public GetListVO<List<Appointment>> listAppointment(Long page, Long pageSize, String studentId, String counselorId) {
+        QueryWrapper<Appointment> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(StringUtils.isNotBlank(studentId), "student_id", studentId);
+        queryWrapper.eq(StringUtils.isNotBlank(counselorId), "counselor_id", counselorId);
+        Page<Appointment> pageHelper = new Page<>(page, pageSize);
+        appointmentMapper.selectPage(pageHelper, queryWrapper);
+        return new GetListVO<>(pageHelper.getTotal(), pageHelper.getCurrent(), pageHelper.getRecords());
     }
 }

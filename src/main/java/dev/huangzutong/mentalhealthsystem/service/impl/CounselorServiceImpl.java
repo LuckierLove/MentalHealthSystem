@@ -8,7 +8,7 @@ import dev.huangzutong.mentalhealthsystem.entity.Counselor;
 import dev.huangzutong.mentalhealthsystem.entity.Role;
 import dev.huangzutong.mentalhealthsystem.entity.UserRole;
 import dev.huangzutong.mentalhealthsystem.entity.req.AddCounselorReq;
-import dev.huangzutong.mentalhealthsystem.entity.vo.GetCounselorListVO;
+import dev.huangzutong.mentalhealthsystem.entity.vo.GetListVO;
 import dev.huangzutong.mentalhealthsystem.mapper.CounselorMapper;
 import dev.huangzutong.mentalhealthsystem.mapper.RoleMapper;
 import dev.huangzutong.mentalhealthsystem.mapper.UserRoleMapper;
@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 咨询师表 服务实现类
@@ -87,12 +88,12 @@ public class CounselorServiceImpl extends ServiceImpl<CounselorMapper, Counselor
      * @return 咨询师列表
      */
     @Override
-    public GetCounselorListVO getCounselorList(Long page, Long pageSize, String keyword) {
+    public GetListVO<List<Counselor>> getCounselorList(Long page, Long pageSize, String keyword) {
         QueryWrapper<Counselor> queryWrapper = new QueryWrapper<>();
         queryWrapper.like(StringUtils.isNotBlank(keyword), "name", keyword);
         Page<Counselor> pageHelper = new Page<>(page, pageSize);
         counselorMapper.selectPage(pageHelper, queryWrapper);
-        GetCounselorListVO vo = new GetCounselorListVO();
+        GetListVO<List<Counselor>> vo = new GetListVO<List<Counselor>>();
         vo.setPage(pageHelper.getCurrent())
                 .setTotal(pageHelper.getTotal())
                 .setRecords(pageHelper.getRecords());

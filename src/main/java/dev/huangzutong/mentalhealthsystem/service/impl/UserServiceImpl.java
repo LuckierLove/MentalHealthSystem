@@ -14,6 +14,7 @@ import dev.huangzutong.mentalhealthsystem.entity.UserRole;
 import dev.huangzutong.mentalhealthsystem.entity.req.CreateUserReq;
 import dev.huangzutong.mentalhealthsystem.entity.req.LoginReq;
 import dev.huangzutong.mentalhealthsystem.entity.req.RegisterReq;
+import dev.huangzutong.mentalhealthsystem.entity.vo.GetListVO;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetUserInfoVO;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetUserListVO;
 import dev.huangzutong.mentalhealthsystem.mapper.RoleMapper;
@@ -165,7 +166,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * @return 所有用户信息
      */
     @Override
-    public GetUserListVO listUser(Long page, Long pageSize, String keyword) {
+    public GetListVO<List<GetUserInfoVO>> listUser(Long page, Long pageSize, String keyword) {
         // 构建查询条件
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.like(StringUtils.isNotBlank(keyword), "nickname", keyword);
@@ -173,7 +174,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         Page<User> userPage = userMapper.selectPage(pageParam, queryWrapper);
 
 
-        GetUserListVO getUserListVO = new GetUserListVO();
+        GetListVO<List<GetUserInfoVO>> getUserListVO = new GetListVO<>();
         getUserListVO.setTotal(userPage.getTotal());
         getUserListVO.setPage(userPage.getCurrent());
 

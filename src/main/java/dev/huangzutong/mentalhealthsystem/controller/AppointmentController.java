@@ -1,13 +1,17 @@
 package dev.huangzutong.mentalhealthsystem.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.stp.StpUtil;
 import dev.huangzutong.mentalhealthsystem.common.Result;
 import dev.huangzutong.mentalhealthsystem.entity.Appointment;
 import dev.huangzutong.mentalhealthsystem.entity.req.CreateAppointmentReq;
+import dev.huangzutong.mentalhealthsystem.entity.vo.GetListVO;
 import dev.huangzutong.mentalhealthsystem.service.IAppointmentService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 预约相关接口
@@ -66,5 +70,21 @@ public class AppointmentController {
         log.info("更新预约 {}", req);
         appointmentService.updateAppointment(id, req);
         return Result.success();
+    }
+
+    /**
+     * 获取预约列表
+     * @param page 页码
+     * @param pageSize 页大小
+     * @param studentId 学生对应用户ID
+     * @param counselorId 咨询师对应用户ID
+     * @return 预约列表
+     */
+    @GetMapping("/list")
+    public Result<GetListVO<List<Appointment>>> listAppointment(@RequestParam(required = false, defaultValue = "1") Long page,
+                                                                @RequestParam(required = false, defaultValue = "10") Long pageSize,
+                                                                @RequestParam(required = false) String studentId,
+                                                                @RequestParam(required = false) String counselorId) {
+        return Result.success(appointmentService.listAppointment(page, pageSize, studentId, counselorId));
     }
 }
