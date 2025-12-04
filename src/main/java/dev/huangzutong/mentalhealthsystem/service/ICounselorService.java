@@ -20,4 +20,11 @@ public interface ICounselorService extends IService<Counselor> {
      * @param id 咨询师id
      */
     void removeCounselor(String id);
+
+    /**
+     * 更新咨询师信息
+     * @param id 咨询师id
+     * @param req 更新咨询师请求参数
+     */
+    void updateCounselor(String id, AddCounselorReq req);
 }

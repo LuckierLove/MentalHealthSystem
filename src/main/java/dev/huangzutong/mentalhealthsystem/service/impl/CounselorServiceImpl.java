@@ -62,6 +62,20 @@ public class CounselorServiceImpl extends ServiceImpl<CounselorMapper, Counselor
     }
 
     /**
+     * 更新咨询师信息
+     *
+     * @param id 咨询师id
+     * @param req 更新咨询师请求参数
+     */
+    @Override
+    public void updateCounselor(String id, AddCounselorReq req) {
+        Counselor counselor = new Counselor();
+        BeanUtils.copyProperties(req, counselor);
+        counselor.setId(id);
+        updateById(counselor);
+    }
+
+    /**
      * 获取咨询师id
      *
      * @return 咨询师id

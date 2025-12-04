@@ -60,4 +60,19 @@ public class CounselorController {
         log.info("获取咨询师 {}", id);
         return Result.success(counselorService.getById(id));
     }
+
+    /**
+     * 更新咨询师信息
+     *
+     * @param id 咨询师id
+     * @param req 更新咨询师请求参数
+     * @return 更新结果
+     */
+    @PutMapping("/{id}")
+    @SaCheckPermission(value = "counselor:update", orRole = "管理员")
+    public Result<Void> updateCounselor(@PathVariable String id, @RequestBody AddCounselorReq req) {
+        log.info("更新咨询师 {}", req);
+        counselorService.updateCounselor(id, req);
+        return Result.success();
+    }
 }
