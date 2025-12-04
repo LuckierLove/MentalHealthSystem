@@ -2,8 +2,12 @@ package dev.huangzutong.mentalhealthsystem.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.lang.generator.SnowflakeGenerator;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import dev.huangzutong.mentalhealthsystem.entity.TreeholePost;
 import dev.huangzutong.mentalhealthsystem.entity.req.AddPostReq;
+import dev.huangzutong.mentalhealthsystem.entity.vo.GetListVO;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetTreeholePostVO;
 import dev.huangzutong.mentalhealthsystem.mapper.TreeholePostMapper;
 import dev.huangzutong.mentalhealthsystem.service.ITreeholePostService;
@@ -12,12 +16,19 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 树洞帖子表 服务实现类
  */
 @Service
 public class TreeholePostServiceImpl extends ServiceImpl<TreeholePostMapper, TreeholePost> implements ITreeholePostService {
+
+    private final TreeholePostMapper treeholePostMapper;
+
+    public TreeholePostServiceImpl(TreeholePostMapper treeholePostMapper) {
+        this.treeholePostMapper = treeholePostMapper;
+    }
 
     /**
      * 添加树洞帖子
@@ -47,5 +58,38 @@ public class TreeholePostServiceImpl extends ServiceImpl<TreeholePostMapper, Tre
         GetTreeholePostVO getTreeholePostVO = new GetTreeholePostVO();
         BeanUtils.copyProperties(treeholePost, getTreeholePostVO);
         return getTreeholePostVO;
+    }
+
+    /**
+     * 获取树洞帖子列表
+     *
+     * @param page       页码
+     * @param pageSize   每页数量
+     * @param keyword    关键词
+     * @param pass       审核状态
+     * @return 树洞帖子列表
+     */
+    @Override
+    public GetListVO<List<GetTreeholePostVO>> getPostList(Integer page, Integer pageSize, String keyword, Integer pass) {
+        QueryWrapper<TreeholePost> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like(StringUtils.isNotBlank(keyword), "title", keyword);
+        queryWrapper.eq(pass != null, "pass", pass);
+        queryWrapper.orderByDesc("post_time");
+        Page<TreeholePost> pageHelper = new Page<>(page, pageSize);
+        treeholePostMapper.selectPage(pageHelper, queryWrapper);
+
+        GetListVO<List<GetTreeholePostVO>> getListVO = new GetListVO<>();
+        getListVO.setTotal(pageHelper.getTotal());
+        getListVO.setPage(pageHelper.getCurrent());
+        getListVO.setRecords(
+                pageHelper.getRecords()
+                        .stream()
+                        .map(treeholePost -> {
+                            GetTreeholePostVO getTreeholePostVO = new GetTreeholePostVO();
+                            BeanUtils.copyProperties(treeholePost, getTreeholePostVO);
+                            return getTreeholePostVO;
+                        }).toList()
+        );
+        return getListVO;
     }
 }
