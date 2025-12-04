@@ -14,4 +14,10 @@ public interface ICounselorService extends IService<Counselor> {
      * @param req 添加咨询师请求参数
      */
     void addCounselor(AddCounselorReq req);
+
+    /**
+     * 删除咨询师
+     * @param id 咨询师id
+     */
+    void removeCounselor(String id);
 }

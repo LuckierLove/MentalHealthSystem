@@ -7,10 +7,7 @@ import dev.huangzutong.mentalhealthsystem.entity.req.AddCounselorReq;
 import dev.huangzutong.mentalhealthsystem.service.ICounselorService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 咨询师相关接口
@@ -34,6 +31,20 @@ public class CounselorController {
     public Result<Void> addCounselor(@RequestBody AddCounselorReq req) {
         log.info("添加咨询师 {}", req);
         counselorService.addCounselor(req);
+        return Result.success();
+    }
+
+    /**
+     * 删除咨询师
+     *
+     * @param id 咨询师id
+     * @return 删除结果
+     */
+    @DeleteMapping("/{id}")
+    @SaCheckPermission(value = "counselor:delete", orRole = "管理员")
+    public Result<Void> deleteCounselor(@PathVariable String id) {
+        log.info("删除咨询师 {}", id);
+        counselorService.removeCounselor(id);
         return Result.success();
     }
 }

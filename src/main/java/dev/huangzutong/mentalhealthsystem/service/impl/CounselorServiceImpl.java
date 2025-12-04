@@ -45,4 +45,31 @@ public class CounselorServiceImpl extends ServiceImpl<CounselorMapper, Counselor
         String role_id = roleMapper.selectOne(new QueryWrapper<Role>().eq("name", "咨询师")).getId();
         userRoleMapper.insert(new UserRole().setUserId(counselor.getUserId()).setRoleId(role_id));
     }
+
+    /**
+     * 删除咨询师
+     *
+     * @param id 咨询师id
+     */
+    @Transactional
+    @Override
+    public void removeCounselor(String id) {
+        Counselor counselor = getById(id);
+        removeById(counselor.getId());
+        userRoleMapper.delete(new QueryWrapper<UserRole>().eq("user_id", counselor.getUserId())
+                .eq("role_id", getCounselorId())
+        );
+    }
+
+    /**
+     * 获取咨询师id
+     *
+     * @return 咨询师id
+     */
+    private String getCounselorId() {
+        for (Role role : roleMapper.selectList(null)) {
+            if(role.getName().equals("咨询师")) return role.getId();
+        }
+        return null;
+    }
 }
