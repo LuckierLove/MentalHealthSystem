@@ -3,6 +3,7 @@ package dev.huangzutong.mentalhealthsystem.controller;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import dev.huangzutong.mentalhealthsystem.common.Result;
+import dev.huangzutong.mentalhealthsystem.entity.Counselor;
 import dev.huangzutong.mentalhealthsystem.entity.req.AddCounselorReq;
 import dev.huangzutong.mentalhealthsystem.service.ICounselorService;
 import jakarta.annotation.Resource;
@@ -46,5 +47,17 @@ public class CounselorController {
         log.info("删除咨询师 {}", id);
         counselorService.removeCounselor(id);
         return Result.success();
+    }
+
+    /**
+     * 获取咨询师详情
+     *
+     * @param id 咨询师id
+     * @return 咨询师信息
+     */
+    @GetMapping("/{id}")
+    public Result<Counselor> getCounselor(@PathVariable String id) {
+        log.info("获取咨询师 {}", id);
+        return Result.success(counselorService.getById(id));
     }
 }
