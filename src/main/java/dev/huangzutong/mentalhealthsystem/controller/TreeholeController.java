@@ -1,6 +1,7 @@
 package dev.huangzutong.mentalhealthsystem.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import dev.huangzutong.mentalhealthsystem.common.Result;
 import dev.huangzutong.mentalhealthsystem.entity.TreeholePost;
 import dev.huangzutong.mentalhealthsystem.entity.TreeholeReply;
@@ -142,5 +143,16 @@ public class TreeholeController {
         treeholeReply.setId(id);
         treeholeReplyService.updateById(treeholeReply);
         return Result.success();
+    }
+
+    /**
+     * 获取树洞帖子回复列表
+     * @param id 树洞帖子ID
+     * @return 树洞帖子回复列表
+     */
+    @GetMapping("/reply/list/{id}")
+    public Result<List<TreeholeReply>> listReply(@PathVariable String id){
+        log.info("查询树洞帖子回复列表：{}", id);
+        return Result.success(treeholeReplyService.listPostReply(id));
     }
 }
