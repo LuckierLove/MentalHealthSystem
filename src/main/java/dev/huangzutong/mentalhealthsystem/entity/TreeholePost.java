@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -41,12 +43,14 @@ public class TreeholePost{
      * 发帖人用户ID
      */
     @TableField("user_id")
+    @JsonProperty("user_id")
     private String userId;
 
     /**
      * 发帖时间
      */
     @TableField("post_time")
+    @JsonProperty("post_time")
     private LocalDateTime postTime;
 
     /**

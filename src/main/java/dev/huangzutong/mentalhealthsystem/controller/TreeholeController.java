@@ -3,6 +3,7 @@ package dev.huangzutong.mentalhealthsystem.controller;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import dev.huangzutong.mentalhealthsystem.common.Result;
 import dev.huangzutong.mentalhealthsystem.entity.TreeholePost;
+import dev.huangzutong.mentalhealthsystem.entity.TreeholeReply;
 import dev.huangzutong.mentalhealthsystem.entity.req.AddPostReq;
 import dev.huangzutong.mentalhealthsystem.entity.req.AddReplyReq;
 import dev.huangzutong.mentalhealthsystem.entity.req.UpdatePostReq;
@@ -104,5 +105,16 @@ public class TreeholeController {
         log.info("创建树洞帖子回复：{}", req);
         treeholeReplyService.createReply(req);
         return Result.success();
+    }
+
+    /**
+     * 获取树洞帖子回复列表
+     * @param id 树洞帖子ID
+     * @return 树洞帖子回复列表
+     */
+    @GetMapping("/reply/{id}")
+    public Result<TreeholeReply> getReply(@PathVariable Long id){
+        log.info("获取树洞帖子回复：{}", id);
+        return Result.success(treeholeReplyService.getById(id));
     }
 }
