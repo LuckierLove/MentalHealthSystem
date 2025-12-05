@@ -53,4 +53,17 @@ public class MentalTestAnswerController {
         log.info("查询心理测试作答列表：{} {} {} {}", page, pageSize, testId, userId);
         return Result.success(mentalTestAnswerService.list(page, pageSize, testId, userId));
     }
+
+    /**
+     * 删除心理测试作答
+     *
+     * @param id 心理测试作答ID
+     * @return 删除结果
+     */
+    @DeleteMapping("/{id}")
+    public Result<Void> delete(@PathVariable String id){
+        log.info("删除心理测试作答：{}", id);
+        mentalTestAnswerService.removeById(id);
+        return Result.success();
+    }
 }
