@@ -45,4 +45,16 @@ public class RoleController {
         roleService.updateById(role.setId(id));
         return Result.success();
     }
+
+    /**
+     * 删除角色
+     * @param id 角色ID
+     * @return 删除结果
+     */
+    @DeleteMapping("/{id}")
+    public Result<Void> deleteRole(@PathVariable String id) {
+        log.info("删除角色 {}", id);
+        roleService.removeById(id);
+        return Result.success();
+    }
 }
