@@ -117,4 +117,16 @@ public class TreeholeController {
         log.info("获取树洞帖子回复：{}", id);
         return Result.success(treeholeReplyService.getById(id));
     }
+
+    /**
+     * 删除树洞帖子回复
+     * @param id 树洞帖子回复ID
+     * @return 删除结果
+     */
+    @DeleteMapping("/reply/{id}")
+    public Result<String> deleteReply(@PathVariable Long id){
+        log.info("删除树洞帖子回复：{}", id);
+        treeholeReplyService.removeById(id);
+        return Result.success();
+    }
 }
