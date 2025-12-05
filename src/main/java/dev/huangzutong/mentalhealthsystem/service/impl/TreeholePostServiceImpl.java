@@ -6,7 +6,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import dev.huangzutong.mentalhealthsystem.entity.TreeholePost;
+import dev.huangzutong.mentalhealthsystem.entity.TreeholeReply;
 import dev.huangzutong.mentalhealthsystem.entity.req.AddPostReq;
+import dev.huangzutong.mentalhealthsystem.entity.req.AddReplyReq;
 import dev.huangzutong.mentalhealthsystem.entity.req.UpdatePostReq;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetListVO;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetTreeholePostVO;
@@ -98,4 +100,6 @@ public class TreeholePostServiceImpl extends ServiceImpl<TreeholePostMapper, Tre
         treeholePost.setId(id.toString());
         updateById(treeholePost);
     }
+
+
 }

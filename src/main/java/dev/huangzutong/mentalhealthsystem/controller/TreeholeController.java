@@ -4,10 +4,12 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import dev.huangzutong.mentalhealthsystem.common.Result;
 import dev.huangzutong.mentalhealthsystem.entity.TreeholePost;
 import dev.huangzutong.mentalhealthsystem.entity.req.AddPostReq;
+import dev.huangzutong.mentalhealthsystem.entity.req.AddReplyReq;
 import dev.huangzutong.mentalhealthsystem.entity.req.UpdatePostReq;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetListVO;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetTreeholePostVO;
 import dev.huangzutong.mentalhealthsystem.service.ITreeholePostService;
+import dev.huangzutong.mentalhealthsystem.service.ITreeholeReplyService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,8 @@ import java.util.List;
 public class TreeholeController {
     @Resource
     private ITreeholePostService treeholePostService;
+    @Resource
+    private ITreeholeReplyService treeholeReplyService;
 
     /**
      * 创建树洞帖子
@@ -87,6 +91,18 @@ public class TreeholeController {
     public Result<Void> deletePost(@PathVariable Long id){
         log.info("删除树洞帖子：{}", id);
         treeholePostService.removeById(id);
+        return Result.success();
+    }
+
+    /**
+     * 创建树洞帖子回复
+     * @param req 回复参数
+     * @return 创建结果
+     */
+    @PostMapping("/reply")
+    public Result<Void> createReply(@RequestBody AddReplyReq req){
+        log.info("创建树洞帖子回复：{}", req);
+        treeholeReplyService.createReply(req);
         return Result.success();
     }
 }

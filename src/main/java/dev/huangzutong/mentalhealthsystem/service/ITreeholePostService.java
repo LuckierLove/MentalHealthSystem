@@ -3,6 +3,7 @@ package dev.huangzutong.mentalhealthsystem.service;
 import dev.huangzutong.mentalhealthsystem.entity.TreeholePost;
 import com.baomidou.mybatisplus.extension.service.IService;
 import dev.huangzutong.mentalhealthsystem.entity.req.AddPostReq;
+import dev.huangzutong.mentalhealthsystem.entity.req.AddReplyReq;
 import dev.huangzutong.mentalhealthsystem.entity.req.UpdatePostReq;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetListVO;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetTreeholePostVO;
