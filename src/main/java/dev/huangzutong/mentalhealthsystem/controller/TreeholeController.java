@@ -129,4 +129,18 @@ public class TreeholeController {
         treeholeReplyService.removeById(id);
         return Result.success();
     }
+
+    /**
+     * 修改树洞帖子回复
+     * @param id 树洞帖子回复ID
+     * @param treeholeReply 树洞帖子回复
+     * @return 修改结果
+     */
+    @PutMapping("/reply/{id}")
+    public Result<String> updateReply(@PathVariable Long id, @RequestBody TreeholeReply treeholeReply){
+        log.info("修改树洞帖子回复：{}", treeholeReply);
+        treeholeReply.setId(id);
+        treeholeReplyService.updateById(treeholeReply);
+        return Result.success();
+    }
 }
