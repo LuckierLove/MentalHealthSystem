@@ -66,4 +66,17 @@ public class MentalTestAnswerController {
         mentalTestAnswerService.removeById(id);
         return Result.success();
     }
+
+    /**
+     * 根据ID查询心理测试作答
+     *
+     * @param id 心理测试作答ID
+     * @return 心理测试作答
+     */
+    @GetMapping("/{id}")
+    public Result<MentalTestAnswer> get(@PathVariable String id){
+        log.info("查询id为{}的心理测试作答", id);
+        MentalTestAnswer mentalTestAnswer = mentalTestAnswerService.getById(id);
+        return Result.success(mentalTestAnswer);
+    }
 }
