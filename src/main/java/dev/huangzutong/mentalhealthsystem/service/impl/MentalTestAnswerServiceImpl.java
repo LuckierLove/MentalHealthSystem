@@ -60,6 +60,21 @@ public class MentalTestAnswerServiceImpl extends ServiceImpl<MentalTestAnswerMap
     }
 
     /**
+     * 更新心理测试问卷作答
+     *
+     * @param mentalTestAnswer 心理测试问卷作答
+     * @param id 心理测试问卷作答ID
+     */
+    @Override
+    public void update(Long id, MentalTestAnswer mentalTestAnswer) {
+        String testId = getById(id).getTestId();
+        mentalTestAnswer.setScore(getScore(testId, mentalTestAnswer.getContent()));
+        mentalTestAnswer.setAnswerTime(LocalDateTime.now());
+        mentalTestAnswer.setId(id);
+        updateById(mentalTestAnswer);
+    }
+
+    /**
      * 获取心理测试问卷作答分数
      * @param testId 心理测试问卷id
      * @param answer 作答内容

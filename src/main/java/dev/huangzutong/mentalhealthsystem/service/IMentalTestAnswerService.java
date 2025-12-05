@@ -28,4 +28,12 @@ public interface IMentalTestAnswerService extends IService<MentalTestAnswer> {
      * @return 心理测试问卷作答列表
      */
     GetListVO<List<MentalTestAnswer>> list(Long page, Long pageSize, String testId, String userId);
+
+    /**
+     * 修改心理测试问卷作答
+     *
+     * @param mentalTestAnswer 心理测试问卷作答
+     * @param id               心理测试问卷作答ID
+     */
+    void update(Long id, MentalTestAnswer mentalTestAnswer);
 }

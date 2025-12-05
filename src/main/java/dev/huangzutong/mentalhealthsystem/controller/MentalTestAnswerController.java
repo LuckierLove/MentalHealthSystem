@@ -61,7 +61,7 @@ public class MentalTestAnswerController {
      * @return 删除结果
      */
     @DeleteMapping("/{id}")
-    public Result<Void> delete(@PathVariable String id){
+    public Result<Void> delete(@PathVariable Long id){
         log.info("删除心理测试作答：{}", id);
         mentalTestAnswerService.removeById(id);
         return Result.success();
@@ -74,9 +74,16 @@ public class MentalTestAnswerController {
      * @return 心理测试作答
      */
     @GetMapping("/{id}")
-    public Result<MentalTestAnswer> get(@PathVariable String id){
+    public Result<MentalTestAnswer> get(@PathVariable Long id){
         log.info("查询id为{}的心理测试作答", id);
         MentalTestAnswer mentalTestAnswer = mentalTestAnswerService.getById(id);
         return Result.success(mentalTestAnswer);
+    }
+
+    @PutMapping("/{id}")
+    public Result<Void> update(@PathVariable Long id, @RequestBody MentalTestAnswer mentalTestAnswer){
+        log.info("修改心理测试作答信息 {} {}",id, mentalTestAnswer);
+        mentalTestAnswerService.update(id, mentalTestAnswer);
+        return Result.success();
     }
 }
