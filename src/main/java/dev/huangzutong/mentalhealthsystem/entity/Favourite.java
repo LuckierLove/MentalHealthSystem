@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -28,12 +30,14 @@ public class Favourite{
      * 学生对应用户ID
      */
     @TableField("student_id")
+    @JsonProperty("student_id")
     private String studentId;
 
     /**
      * 咨询师对应用户ID
      */
     @TableField("counselor_id")
+    @JsonProperty("counselor_id")
     private String counselorId;
 
 

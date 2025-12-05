@@ -8,4 +8,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IFavouriteService extends IService<Favourite> {
 
+    /**
+     * 创建收藏
+     *
+     * @param favourite 创建收藏参数
+     */
+    void createFavourite(Favourite favourite);
 }
