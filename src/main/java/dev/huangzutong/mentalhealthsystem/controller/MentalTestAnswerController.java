@@ -1,14 +1,16 @@
 package dev.huangzutong.mentalhealthsystem.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import dev.huangzutong.mentalhealthsystem.common.Result;
 import dev.huangzutong.mentalhealthsystem.entity.MentalTestAnswer;
+import dev.huangzutong.mentalhealthsystem.entity.vo.GetListVO;
 import dev.huangzutong.mentalhealthsystem.service.IMentalTestAnswerService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 心理测试作答相关接口
@@ -32,5 +34,23 @@ public class MentalTestAnswerController {
         log.info("创建心理测试作答：{}", req);
         mentalTestAnswerService.createAnswer(req);
         return Result.success();
+    }
+
+    /**
+     * 查询心理测试问卷作答列表
+     * @param page 页码
+     * @param pageSize 页大小
+     * @param testId 测试问卷ID
+     * @param userId 作答用户ID
+     * @return 心理健康测试问卷作答列表
+     */
+    @GetMapping("/list")
+    public Result<GetListVO<List<MentalTestAnswer>>> list(
+            @RequestParam(defaultValue = "1") Long page,
+            @RequestParam(defaultValue = "10") Long pageSize,
+            @RequestParam(value = "test_id", required = false) String testId,
+            @RequestParam(value = "user_id", required = false) String userId){
+        log.info("查询心理测试作答列表：{} {} {} {}", page, pageSize, testId, userId);
+        return Result.success(mentalTestAnswerService.list(page, pageSize, testId, userId));
     }
 }
