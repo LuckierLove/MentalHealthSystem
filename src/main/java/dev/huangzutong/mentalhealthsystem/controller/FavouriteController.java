@@ -47,4 +47,15 @@ public class FavouriteController {
     ) {
         return Result.success(favouriteService.list(page, pageSize, studentId));
     }
+
+    /**
+     * 删除收藏
+     * @param id 收藏ID
+     */
+    @DeleteMapping("/{id}")
+    public Result<Void> delete(@PathVariable Long id) {
+        log.info("删除收藏：{}", id);
+        favouriteService.removeById(id);
+        return Result.success();
+    }
 }
