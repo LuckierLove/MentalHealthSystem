@@ -100,7 +100,7 @@ public class UserController {
      * 获取当前用户信息
      * @return 当前用户信息
      */
-    @GetMapping("/role")
+    @GetMapping("/info")
     public Result<Map<String, Object>> getCurrentUserInfo() {
         log.info("获取当前用户角色");
         return Result.success(Map.of("role", StpUtil.getRoleList(), "id", StpUtil.getLoginId()));
