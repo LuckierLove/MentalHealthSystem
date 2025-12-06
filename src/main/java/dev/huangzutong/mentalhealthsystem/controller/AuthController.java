@@ -1,5 +1,6 @@
 package dev.huangzutong.mentalhealthsystem.controller;
 
+import cn.dev33.satoken.stp.StpUtil;
 import dev.huangzutong.mentalhealthsystem.common.Result;
 import dev.huangzutong.mentalhealthsystem.entity.req.LoginReq;
 import dev.huangzutong.mentalhealthsystem.entity.req.RegisterReq;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * 鉴权相关接口
@@ -39,9 +42,9 @@ public class AuthController {
      * @return 登录结果
      */
     @PostMapping("/login")
-    public Result<Void> login(@RequestBody LoginReq req){
+    public Result<Map<String, Object>> login(@RequestBody LoginReq req){
         log.info("用户登录：{}", req);
         userService.login(req);
-        return Result.success();
+        return Result.success(Map.of("token", StpUtil.getTokenInfo()));
     }
 }
