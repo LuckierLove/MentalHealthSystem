@@ -5,10 +5,13 @@ import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.hutool.core.lang.generator.SnowflakeGenerator;
 import dev.huangzutong.mentalhealthsystem.common.Result;
 import dev.huangzutong.mentalhealthsystem.entity.Role;
+import dev.huangzutong.mentalhealthsystem.entity.vo.GetListVO;
 import dev.huangzutong.mentalhealthsystem.service.IRoleService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 角色相关接口
@@ -56,5 +59,20 @@ public class RoleController {
         log.info("删除角色 {}", id);
         roleService.removeById(id);
         return Result.success();
+    }
+
+    /**
+     * 获取角色列表
+     * @param page 页码
+     * @param pageSize 页大小
+     * @param keyword 角色名关键字
+     * @return 角色列表
+     */
+    @GetMapping("/list")
+    public Result<GetListVO<List<Role>>> getRoleList(@RequestParam(defaultValue = "1") Long page,
+                                                     @RequestParam(defaultValue = "10") Long pageSize,
+                                                     @RequestParam(required = false) String keyword) {
+        log.info("获取角色列表 {} {} {}", page, pageSize, keyword);
+        return Result.success(roleService.list(page, pageSize,  keyword));
     }
 }
