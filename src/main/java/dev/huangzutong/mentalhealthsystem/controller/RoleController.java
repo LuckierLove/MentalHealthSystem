@@ -75,4 +75,15 @@ public class RoleController {
         log.info("获取角色列表 {} {} {}", page, pageSize, keyword);
         return Result.success(roleService.list(page, pageSize,  keyword));
     }
+
+    /**
+     * 获取角色
+     * @param id 角色ID
+     * @return 角色
+     */
+    @GetMapping("/{id}")
+    public Result<Role> getRole(@PathVariable String id) {
+        log.info("获取角色 {}", id);
+        return Result.success(roleService.getById(id));
+    }
 }
