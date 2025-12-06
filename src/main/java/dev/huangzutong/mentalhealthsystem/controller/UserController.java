@@ -94,4 +94,14 @@ public class UserController {
         log.info("获取用户列表 当前用户角色: {}", StpUtil.getRoleList());
         return Result.success(userService.listUser(page, pageSize, keyword));
     }
+
+    /**
+     * 获取当前用户角色
+     * @return 当前用户角色
+     */
+    @GetMapping("/role")
+    public Result<String> getCurrentUserRole() {
+        log.info("获取当前用户角色");
+        return Result.success(StpUtil.getRoleList().toString());
+    }
 }
