@@ -106,6 +106,4 @@ export const useUserStore = defineStore('user', () => {
     hasRole,
     hasPermission
   }
-}, {
-  persist: true // 持久化存储
 })
