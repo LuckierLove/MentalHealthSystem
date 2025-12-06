@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -96,12 +97,12 @@ public class UserController {
     }
 
     /**
-     * 获取当前用户角色
-     * @return 当前用户角色
+     * 获取当前用户信息
+     * @return 当前用户信息
      */
     @GetMapping("/role")
-    public Result<String> getCurrentUserRole() {
+    public Result<Map<String, Object>> getCurrentUserInfo() {
         log.info("获取当前用户角色");
-        return Result.success(StpUtil.getRoleList().toString());
+        return Result.success(Map.of("role", StpUtil.getRoleList(), "id", StpUtil.getLoginId()));
     }
 }
