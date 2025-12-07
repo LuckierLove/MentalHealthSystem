@@ -76,7 +76,7 @@ public class PermissionSecurityController {
     public Result<Void> deleteRolePermission(@PathVariable String role_id, @RequestBody AddPermissionReq req) {
         log.info("删除角色权限：{}", role_id);
         log.info("删除角色权限 当前用户权限: {}", StpUtil.getPermissionList());
-        log.info("添加角色权限 当前用户角色: {}", StpUtil.getRoleList());
+        log.info("删除角色权限 当前用户角色: {}", StpUtil.getRoleList());
         rolePermissionService.deleteRolePermission(role_id, req.getPermission());
         return Result.success();
     }
@@ -90,9 +90,9 @@ public class PermissionSecurityController {
     @PutMapping("/{role_id}")
     @SaCheckPermission(value = "permission:update", orRole = "管理员")
     public Result<Void> updateRolePermission(@PathVariable String role_id, @RequestBody AddPermissionReq req) {
-        log.info("删除角色权限：{}", role_id);
-        log.info("删除角色权限 当前用户权限: {}", StpUtil.getPermissionList());
-        log.info("添加角色权限 当前用户角色: {}", StpUtil.getRoleList());
+        log.info("更新角色权限：{}", role_id);
+        log.info("更新角色权限 当前用户权限: {}", StpUtil.getPermissionList());
+        log.info("更新角色权限 当前用户角色: {}", StpUtil.getRoleList());
         rolePermissionService.updatePermission(role_id, req.getPermission());
         return Result.success();
     }

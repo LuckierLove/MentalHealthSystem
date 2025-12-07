@@ -105,4 +105,14 @@ public class UserController {
         log.info("获取当前用户角色");
         return Result.success(Map.of("role", StpUtil.getRoleList(), "id", StpUtil.getLoginId()));
     }
+
+    /**
+     * 获取用户总数
+     * @return 用户总数
+     */
+    @GetMapping("/total")
+    public Result<Map<String, Object>> getTotalUser() {
+        log.info("获取用户总数");
+        return Result.success(Map.of("total", userService.count()));
+    }
 }

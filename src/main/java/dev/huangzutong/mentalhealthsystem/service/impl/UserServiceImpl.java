@@ -155,6 +155,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         User user = new User();
         BeanUtils.copyProperties(req, user);
         user.setId(userId);
+        if(StringUtils.isBlank(user.getPassword())) user.setPassword(null);
         updateById(user);
     }
 
