@@ -78,6 +78,12 @@ const routes = [
         meta: { title: '心情树洞', requiresAuth: true }
       },
       {
+        path: '/student/tests',
+        name: 'StudentTests',
+        component: () => import('@/views/student/Tests.vue'),
+        meta: { title: '心理测试', requiresAuth: true }
+      },
+      {
         path: '/counselor/appointments',
         name: 'CounselorAppointments',
         component: () => import('@/views/counselor/AppointmentManagement.vue'),
@@ -94,6 +100,12 @@ const routes = [
         name: 'CounselorDialogRecords',
         component: () => import('@/views/main/DialogRecords.vue'),
         meta: { title: '咨询记录', requiresAuth: true }
+      },
+      {
+        path: '/counselor/tests',
+        name: 'CounselorTestManage',
+        component: () => import('@/views/counselor/TestManage.vue'),
+        meta: { title: '问卷管理', requiresAuth: true }
       }
       // 这里可以根据角色添加更多子路由
       // 管理员路由、咨询师路由、学生路由等

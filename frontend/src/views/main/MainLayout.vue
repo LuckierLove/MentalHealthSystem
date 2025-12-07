@@ -49,6 +49,10 @@
               <el-icon><ChatDotRound /></el-icon>
               <span>心情树洞</span>
             </el-menu-item>
+            <el-menu-item index="/counselor/tests">
+              <el-icon><Memo /></el-icon>
+              <span>问卷管理</span>
+            </el-menu-item>
           </template>
 
           <!-- 学生菜单 -->
@@ -109,7 +113,8 @@ import {
   ChatDotRound,
   User,
   Avatar,
-  ArrowDown
+  ArrowDown,
+  Memo
 } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/user'
 

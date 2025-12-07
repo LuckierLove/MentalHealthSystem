@@ -112,6 +112,15 @@
             <p>分享和倾诉心情</p>
           </el-card>
         </el-col>
+        <el-col :span="6">
+          <el-card shadow="hover" class="feature-card" @click="goTo('/counselor/tests')">
+            <el-icon class="feature-icon" :size="40" color="#67C23A">
+              <Memo />
+            </el-icon>
+            <h3>问卷管理</h3>
+            <p>创建和管理测试问卷</p>
+          </el-card>
+        </el-col>
       </template>
 
       <!-- 学生功能 -->
