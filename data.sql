@@ -1,7 +1,7 @@
 USE mental_health_system;
 
--- 插入用户数据 (密码均为 123456)
--- 密码哈希: $2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOcd7.odEqJix
+-- 插入用户数据 (密码均为 12345678)
+-- 密码哈希: $2a$10$QJyBCAsR/NFAt1Z/C2GO2.wurarTstVMcQed8PGE6BqeD9ZlSGyh6
 INSERT INTO user (id, username, password, nickname, real_name, email, avatar) VALUES
 ('1', 'admin', '$2a$10$QJyBCAsR/NFAt1Z/C2GO2.wurarTstVMcQed8PGE6BqeD9ZlSGyh6', '管理员', '张三', 'admin@example.com', 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'),
 ('2', 'counselor1', '$2a$10$QJyBCAsR/NFAt1Z/C2GO2.wurarTstVMcQed8PGE6BqeD9ZlSGyh6', '李医生', '李四', 'counselor1@example.com', 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'),

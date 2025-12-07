@@ -122,9 +122,9 @@ MentalHealthSystem/
 
 | 角色 | 用户名 | 密码 | 说明 |
 | --- | --- | --- | --- |
-| 管理员 | admin | 123456 | 系统超级管理员 |
-| 咨询师 | counselor1 | 123456 | 示例咨询师账号 |
-| 学生 | student1 | 123456 | 示例学生账号 |
+| 管理员 | admin | 12345678 | 系统超级管理员 |
+| 咨询师 | counselor1 | 12345678 | 示例咨询师账号 |
+| 学生 | student1 | 12345678 | 示例学生账号 |
 
 ## 开发日志
 
@@ -132,38 +132,6 @@ MentalHealthSystem/
     - 完善安全设置功能，支持头像上传和密码修改。
     - 修复收藏夹显示问题，优化咨询师信息展示。
     - 更新数据库初始化脚本，提供完整的测试数据。
-
-
-3. 启动后端服务
-```bash
-mvn spring-boot:run
-```
-
-后端服务将运行在 `http://localhost:8080`
-
-### 前端启动
-
-1. 进入前端目录
-```bash
-cd frontend
-```
-
-2. 安装依赖
-```bash
-npm install
-```
-
-3. 启动开发服务器
-```bash
-npm run dev
-```
-
-前端应用将运行在 `http://localhost:5173`
-
-4. 构建生产版本
-```bash
-npm run build
-```
 
 ## API 接口文档
 
@@ -222,13 +190,10 @@ npm run build
 - `POST /treehole` - 发布树洞
 - `POST /treehole/{id}/reply` - 回复树洞
 
-## 前端页面
-
-### 登录页面
-![登录页面](https://github.com/user-attachments/assets/c230f76a-9778-4d48-b1a7-733ae54ce55c)
-
-### 注册对话框
-![注册对话框](https://github.com/user-attachments/assets/136c97da-9fdd-4384-98d5-ebfd9f4466a9)
+### 收藏接口
+- `GET /favourite/list` - 获取收藏列表
+- `POST /favourite` - 添加收藏
+- `DELETE /favourite/{id}` - 取消收藏
 
 ## 开发规范
 
