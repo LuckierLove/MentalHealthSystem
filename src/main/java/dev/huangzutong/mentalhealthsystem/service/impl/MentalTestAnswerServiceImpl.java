@@ -81,18 +81,14 @@ public class MentalTestAnswerServiceImpl extends ServiceImpl<MentalTestAnswerMap
      * @return 作答分数
      */
     public Integer getScore(String testId, String answer) {
-        MentalTest mentalTest = mentalTestMapper.selectById(testId);
-        JSONArray questions = JSONArray.parse(mentalTest.getContent());
         JSONArray answers = JSONArray.parse(answer);
 
         Integer score = 0;
         for (int i = 0; i < answers.size(); i++) {
             JSONObject as = answers.getJSONObject(i);
-            Integer questionIndex = as.getInteger("question");
             Integer choose = as.getInteger("choose");
-            JSONObject questionContent = questions.getJSONObject(questionIndex - 1);
-            Integer value = questionContent.getJSONArray("choose").getJSONObject(choose - 1).getInteger("value");
-            score += value;
+            // choose 是选项的分值，直接加到总分中
+            score += choose;
         }
         return score;
     }
