@@ -72,7 +72,7 @@
         <!-- 顶部栏 -->
         <el-header class="header">
           <div class="header-left">
-            <span class="welcome-text">欢迎，{{ userStore.userId }}</span>
+            <span class="welcome-text">欢迎，{{ userStore.nickname }}</span>
           </div>
           <div class="header-right">
             <el-dropdown @command="handleCommand">
@@ -171,7 +171,7 @@ function handleLogout() {
 
 // 组件挂载时确保已获取用户信息
 onMounted(() => {
-  if (!userStore.userId) {
+  if (!userStore.nickname) {
     userStore.fetchUserInfo().catch(() => {
       ElMessage.error('获取用户信息失败')
       router.push('/login')

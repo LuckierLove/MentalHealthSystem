@@ -18,8 +18,16 @@ request.interceptors.request.use(
     // 从 store 中获取 token
     const userStore = useUserStore()
     if (userStore.token) {
-      // 添加 token 到请求头
-      config.headers.Authorization = userStore.token
+      // 不对上传头像和注册接口添加 token（这些接口在未登录情况下也需要可用）
+      const excludePaths = ['/file/upload-avatar', '/auth/register', '/auth/login']
+      const reqUrl = config.url || ''
+      const isExcluded = excludePaths.some((p) => reqUrl.includes(p))
+
+      // 只有当不是排除的路径时，才把 token 放到 satoken 头里
+      if (!isExcluded) {
+        if (!config.headers) config.headers = {}
+        config.headers['satoken'] = userStore.token
+      }
     }
     return config
   },
@@ -36,7 +44,7 @@ request.interceptors.response.use(
     
     // 如果返回的状态码不是 200，则认为有错误
     if (res.code !== 200) {
-      ElMessage.error(res.msg || '请求失败')
+      ElMessage.error(res.data || '请求失败')
       
       // 401: 未授权
       if (res.code === 401) {
@@ -45,7 +53,7 @@ request.interceptors.response.use(
         window.location.href = '/login'
       }
       
-      return Promise.reject(new Error(res.msg || '请求失败'))
+      return Promise.reject(new Error(res.data || '请求失败'))
     }
     
     return res

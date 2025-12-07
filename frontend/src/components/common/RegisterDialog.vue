@@ -97,7 +97,7 @@ import { ElMessage } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 import { register } from '@/api/auth'
 import { uploadAvatar } from '@/api/file'
-
+import request from '@/utils/request'
 // Props
 const props = defineProps({
   modelValue: {
@@ -196,7 +196,14 @@ async function handleAvatarUpload(options) {
     loading.value = true
     const res = await uploadAvatar(options.file)
     if (res.data && res.data.url) {
-      registerForm.avatar = res.data.url
+      let url = res.data.url
+      // 如果返回的是相对路径，则拼接 axios 的 baseURL
+      if (url && !/^https?:\/\//i.test(url)) {
+        const base = request.defaults && request.defaults.baseURL ? request.defaults.baseURL : ''
+        // 合并时注意去除多余斜杠
+        url = `${base.replace(/\/+$/,'')}/${url.replace(/^\/+/, '')}`
+      }
+      registerForm.avatar = url
       ElMessage.success('头像上传成功')
     }
   } catch (error) {

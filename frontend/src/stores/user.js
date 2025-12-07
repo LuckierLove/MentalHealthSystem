@@ -4,7 +4,7 @@
  */
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { getCurrentUserInfo } from '@/api/user'
+import { getCurrentUserInfo, getUserInfo } from '@/api/user'
 import { getCurrentPermissions } from '@/api/permission'
 
 export const useUserStore = defineStore('user', () => {
@@ -12,6 +12,7 @@ export const useUserStore = defineStore('user', () => {
   const token = ref(localStorage.getItem('token') || '')
   const userId = ref('')
   const roles = ref([])
+  const nickname = ref('')
   const permissions = ref([])
   
   /**
@@ -30,6 +31,7 @@ export const useUserStore = defineStore('user', () => {
   function setUserInfo(userInfo) {
     userId.value = userInfo.id || ''
     roles.value = userInfo.role || []
+    nickname.value = userInfo.nickname || ''
   }
   
   /**
@@ -49,6 +51,8 @@ export const useUserStore = defineStore('user', () => {
       // 获取用户基本信息（角色、ID）
       const userRes = await getCurrentUserInfo()
       if (userRes.data) {
+        const userDetailInfo = await getUserInfo(userRes.data.id)
+        userRes.data.nickname = userDetailInfo.data.nickname
         setUserInfo(userRes.data)
       }
       
@@ -104,6 +108,7 @@ export const useUserStore = defineStore('user', () => {
     fetchUserInfo,
     logout,
     hasRole,
-    hasPermission
+    hasPermission,
+    nickname
   }
 })

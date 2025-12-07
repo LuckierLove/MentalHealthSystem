@@ -7,7 +7,7 @@
         </div>
       </template>
       <div class="welcome-content">
-        <p>您好，{{ userInfo }}！</p>
+        <p>您好，{{ nickname }}！</p>
         <p>当前角色：{{ roles }}</p>
         <p class="tips">本系统旨在为大学生提供心理健康支持和咨询服务。</p>
       </div>
@@ -136,7 +136,7 @@ const router = useRouter()
 const userStore = useUserStore()
 
 // 用户信息
-const userInfo = computed(() => userStore.userId || '用户')
+const nickname = computed(() => userStore.nickname || '用户')
 const roles = computed(() => userStore.roles.join('、') || '暂无角色')
 const permissions = computed(() => userStore.permissions)
 
