@@ -13,6 +13,7 @@ export const useUserStore = defineStore('user', () => {
   const userId = ref('')
   const roles = ref([])
   const nickname = ref('')
+  const avatar = ref('')
   const permissions = ref([])
   
   /**
@@ -32,6 +33,7 @@ export const useUserStore = defineStore('user', () => {
     userId.value = userInfo.id || ''
     roles.value = userInfo.role || []
     nickname.value = userInfo.nickname || ''
+    avatar.value = userInfo.avatar || ''
   }
   
   /**
@@ -53,6 +55,7 @@ export const useUserStore = defineStore('user', () => {
       if (userRes.data) {
         const userDetailInfo = await getUserInfo(userRes.data.id)
         userRes.data.nickname = userDetailInfo.data.nickname
+        userRes.data.avatar = userDetailInfo.data.avatar
         setUserInfo(userRes.data)
       }
       
@@ -109,6 +112,7 @@ export const useUserStore = defineStore('user', () => {
     logout,
     hasRole,
     hasPermission,
-    nickname
+    nickname,
+    avatar
   }
 })

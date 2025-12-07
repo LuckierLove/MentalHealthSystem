@@ -9,6 +9,7 @@
         
         <el-menu
           :default-active="activeMenu"
+          :default-openeds="openMenus"
           class="el-menu-vertical"
           router
           background-color="#304156"
@@ -53,6 +54,10 @@
               <el-icon><Memo /></el-icon>
               <span>问卷管理</span>
             </el-menu-item>
+            <el-menu-item index="/counselor/warnings">
+              <el-icon><Bell /></el-icon>
+              <span>心理预警</span>
+            </el-menu-item>
           </template>
 
           <!-- 学生菜单 -->
@@ -62,7 +67,9 @@
                 <el-icon><User /></el-icon>
                 <span>我的服务</span>
               </template>
+              <el-menu-item index="/student/counselors">咨询师推荐</el-menu-item>
               <el-menu-item index="/student/appointments">我的预约</el-menu-item>
+              <el-menu-item index="/student/favourites">我的收藏</el-menu-item>
               <el-menu-item index="/student/tests">心理测试</el-menu-item>
               <el-menu-item index="/student/treehole">心情树洞</el-menu-item>
             </el-sub-menu>
@@ -80,13 +87,15 @@
           <div class="header-right">
             <el-dropdown @command="handleCommand">
               <span class="user-dropdown">
-                <el-icon><Avatar /></el-icon>
+                <el-avatar :size="24" :src="userStore.avatar" v-if="userStore.avatar" style="margin-right: 8px" />
+                <el-icon v-else><Avatar /></el-icon>
                 <span class="user-name">{{ userInfo }}</span>
                 <el-icon class="el-icon--right"><ArrowDown /></el-icon>
               </span>
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item command="profile">个人中心</el-dropdown-item>
+                  <el-dropdown-item command="security">安全设置</el-dropdown-item>
                   <el-dropdown-item divided command="logout">退出登录</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
@@ -114,7 +123,8 @@ import {
   User,
   Avatar,
   ArrowDown,
-  Memo
+  Memo,
+  Bell
 } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/user'
 
@@ -124,6 +134,13 @@ const userStore = useUserStore()
 
 // 当前激活的菜单
 const activeMenu = computed(() => route.path)
+const openMenus = computed(() => {
+  const paths = []
+  if (route.path.startsWith('/student')) paths.push('student')
+  if (route.path.startsWith('/counselor')) paths.push('counselor')
+  if (hasRole('管理员')) paths.push('admin')
+  return paths
+})
 
 // 用户信息显示
 const userInfo = computed(() => {
@@ -144,6 +161,9 @@ function handleCommand(command) {
   switch (command) {
     case 'profile':
       router.push('/profile')
+      break
+    case 'security':
+      router.push('/security')
       break
     case 'logout':
       handleLogout()

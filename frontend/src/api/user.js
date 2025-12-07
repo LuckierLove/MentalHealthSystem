@@ -25,3 +25,17 @@ export function getUserInfo(userId) {
     method: 'get'
   })
 }
+
+/**
+ * 更新用户信息
+ * @param {String} userId - 用户ID
+ * @param {Object} data - 更新的数据 {password, nickname, email, avatar, ...}
+ * @returns {Promise}
+ */
+export function updateUser(userId, data) {
+  return request({
+    url: `/user/${userId}`,
+    method: 'put',
+    data
+  })
+}

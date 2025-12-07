@@ -121,6 +121,15 @@
             <p>创建和管理测试问卷</p>
           </el-card>
         </el-col>
+        <el-col :span="6">
+          <el-card shadow="hover" class="feature-card" @click="goTo('/counselor/warnings')">
+            <el-icon class="feature-icon" :size="40" color="#F56C6C">
+              <Bell />
+            </el-icon>
+            <h3>心理预警</h3>
+            <p>关注超出阈值学生</p>
+          </el-card>
+        </el-col>
       </template>
 
       <!-- 学生功能 -->
@@ -132,6 +141,15 @@
             </el-icon>
             <h3>我的预约</h3>
             <p>查看我的咨询预约</p>
+          </el-card>
+        </el-col>
+        <el-col :span="6">
+          <el-card shadow="hover" class="feature-card" @click="goTo('/student/counselors')">
+            <el-icon class="feature-icon" :size="40" color="#5c7cfa">
+              <User />
+            </el-icon>
+            <h3>咨询师推荐</h3>
+            <p>浏览咨询师信息并收藏</p>
           </el-card>
         </el-col>
         <el-col :span="6">
@@ -150,6 +168,15 @@
             </el-icon>
             <h3>心情树洞</h3>
             <p>分享和倾诉心情</p>
+          </el-card>
+        </el-col>
+        <el-col :span="6">
+          <el-card shadow="hover" class="feature-card" @click="goTo('/student/favourites')">
+            <el-icon class="feature-icon" :size="40" color="#faad14">
+              <StarFilled />
+            </el-icon>
+            <h3>我的收藏</h3>
+            <p>管理已收藏的咨询师</p>
           </el-card>
         </el-col>
         <el-col :span="6">
@@ -177,7 +204,9 @@ import {
   Document,
   Memo,
   ChatDotRound,
-  Avatar
+  Avatar,
+  Bell,
+  StarFilled
 } from '@element-plus/icons-vue'
 import {
   getTotalAppointments,

@@ -66,6 +66,12 @@ const routes = [
         meta: { title: '个人中心', requiresAuth: true }
       },
       {
+        path: '/security',
+        name: 'SecuritySettings',
+        component: () => import('@/views/main/SecuritySettings.vue'),
+        meta: { title: '安全设置', requiresAuth: true }
+      },
+      {
         path: '/student/appointments',
         name: 'StudentAppointments',
         component: () => import('@/views/student/Appointments.vue'),
@@ -82,6 +88,18 @@ const routes = [
         name: 'StudentTests',
         component: () => import('@/views/student/Tests.vue'),
         meta: { title: '心理测试', requiresAuth: true }
+      },
+      {
+        path: '/student/counselors',
+        name: 'StudentCounselors',
+        component: () => import('@/views/student/Counselors.vue'),
+        meta: { title: '咨询师推荐', requiresAuth: true }
+      },
+      {
+        path: '/student/favourites',
+        name: 'StudentFavourites',
+        component: () => import('@/views/student/Favourites.vue'),
+        meta: { title: '我的收藏', requiresAuth: true }
       },
       {
         path: '/counselor/appointments',
@@ -106,6 +124,12 @@ const routes = [
         name: 'CounselorTestManage',
         component: () => import('@/views/counselor/TestManage.vue'),
         meta: { title: '问卷管理', requiresAuth: true }
+      },
+      {
+        path: '/counselor/warnings',
+        name: 'CounselorWarnings',
+        component: () => import('@/views/counselor/WarningAlert.vue'),
+        meta: { title: '心理预警', requiresAuth: true }
       }
       // 这里可以根据角色添加更多子路由
       // 管理员路由、咨询师路由、学生路由等

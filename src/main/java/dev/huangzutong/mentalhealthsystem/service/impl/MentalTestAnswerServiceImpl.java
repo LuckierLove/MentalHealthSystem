@@ -92,4 +92,6 @@ public class MentalTestAnswerServiceImpl extends ServiceImpl<MentalTestAnswerMap
         }
         return score;
     }
+
+
 }
