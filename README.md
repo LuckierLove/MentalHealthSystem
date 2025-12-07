@@ -2,16 +2,16 @@
 
 ## 项目简介
 
-大学生心理健康系统是一个基于 Spring Boot + Vue 3 的全栈应用，旨在为大学生提供心理健康支持和咨询服务。系统支持多角色管理，包括管理员、咨询师和学生，提供心理咨询预约、心理测试、树洞分享等功能。
+大学生心理健康系统是一个基于 Spring Boot + Vue 3 的全栈应用，旨在为大学生提供心理健康支持和咨询服务。系统支持多角色管理，包括管理员、咨询师和学生，提供心理咨询预约、心理测试、树洞分享、咨询师收藏、安全设置等功能。
 
 ## 技术栈
 
 ### 后端
-- **框架**: Spring Boot 3.5.8
-- **鉴权**: Sa-Token 1.44.0
-- **数据库**: MySQL + MyBatis-Plus 3.5.14
-- **缓存**: Redis
-- **语言**: Java 17
+- **框架**: Spring Boot 3.x
+- **鉴权**: Sa-Token
+- **数据库**: MySQL + MyBatis-Plus
+- **工具**: Hutool, Lombok, FastJson2
+- **语言**: Java 17+
 
 ### 前端
 - **框架**: Vue 3 + Vite
@@ -19,6 +19,7 @@
 - **状态管理**: Pinia
 - **路由**: Vue Router 4
 - **HTTP 客户端**: Axios
+- **图标库**: Element Plus Icons
 
 ## 项目结构
 
@@ -26,45 +27,55 @@
 MentalHealthSystem/
 ├── src/                    # 后端源码
 │   ├── main/
-│   │   ├── java/
-│   │   │   └── dev/huangzutong/mentalhealthsystem/
-│   │   │       ├── controller/    # 控制器层
-│   │   │       ├── service/       # 服务层
-│   │   │       ├── mapper/        # 数据访问层
-│   │   │       ├── entity/        # 实体类
-│   │   │       ├── common/        # 公共类
-│   │   │       └── config/        # 配置类
-│   │   └── resources/
-│   │       └── application.yml    # 应用配置
-│   └── test/                      # 测试代码
-├── frontend/                      # 前端源码
+│   │   ├── java/           # Java 源代码
+│   │   └── resources/      # 资源文件 (配置, Mapper XML)
+├── frontend/               # 前端源码
 │   ├── src/
-│   │   ├── api/                   # API 接口封装
-│   │   ├── components/            # 公共组件
-│   │   ├── router/                # 路由配置
-│   │   ├── stores/                # 状态管理
-│   │   ├── utils/                 # 工具函数
-│   │   └── views/                 # 页面组件
-│   ├── package.json               # 前端依赖
-│   └── README.md                  # 前端文档
-├── pom.xml                        # 后端依赖
-└── README.md                      # 项目文档
-
+│   │   ├── api/            # API 接口
+│   │   ├── components/     # 公共组件
+│   │   ├── router/         # 路由配置
+│   │   ├── stores/         # Pinia 状态管理
+│   │   ├── utils/          # 工具类 (Request, etc.)
+│   │   └── views/          # 页面视图
+│   │       ├── auth/       # 认证页面 (登录)
+│   │       ├── main/       # 主布局及通用页面 (首页, 个人中心, 安全设置, 树洞)
+│   │       ├── student/    # 学生端页面 (预约, 测试, 收藏, 咨询师列表)
+│   │       ├── counselor/  # 咨询师端页面 (预约管理, 问卷管理)
+│   │       └── management/ # 管理员页面 (用户, 角色, 咨询师管理)
+├── scheme.sql              # 数据库结构脚本
+├── data.sql                # 数据库初始化数据脚本
+├── pom.xml                 # Maven 依赖配置
+└── README.md               # 项目文档
 ```
 
 ## 核心功能
 
-### 用户角色
-- **管理员**: 用户管理、角色管理、权限管理
-- **咨询师**: 预约管理、咨询记录管理
-- **学生**: 预约咨询、心理测试、树洞分享、收藏咨询师
+### 1. 用户体系
+- **多角色支持**: 管理员、咨询师、学生。
+- **登录注册**: 基于 Sa-Token 的认证，支持密码加密存储。
+- **个人中心**: 查看和编辑个人基本信息。
+- **安全设置**: 
+    - **修改头像**: 支持上传预览。
+    - **修改密码**: 安全的密码修改流程。
 
-### 主要模块
-1. **用户认证**: 基于 Sa-Token 的登录注册和权限控制
-2. **咨询预约**: 学生预约咨询师，咨询师管理预约
-3. **心理测试**: 在线心理健康测评系统
-4. **树洞功能**: 匿名分享和交流平台
-5. **角色权限**: 灵活的角色权限管理系统
+### 2. 心理咨询
+- **咨询师列表**: 学生可以浏览咨询师信息（擅长领域、评分、简介）。
+- **预约服务**: 学生发起预约（线上/线下），咨询师进行确认或取消。
+- **收藏功能**: 学生可以收藏心仪的咨询师，方便快速访问。
+
+### 3. 心理测评
+- **问卷系统**: 支持多种心理测试量表（如 SAS 焦虑自评、SDS 抑郁自评）。
+- **在线作答**: 学生在线完成测试并自动评分。
+- **问卷管理**: 咨询师可以发布和管理心理测试问卷。
+
+### 4. 树洞社区
+- **匿名分享**: 用户可以发布树洞帖子分享心情。
+- **互动交流**: 支持对帖子进行回复和讨论。
+- **内容审核**: 简单的审核机制（数据库字段支持）。
+
+### 5. 系统管理
+- **用户管理**: 管理员管理所有用户信息。
+- **角色权限**: 基于 RBAC 的权限控制。
 
 ## 快速开始
 
@@ -73,30 +84,55 @@ MentalHealthSystem/
 - JDK 17+
 - Maven 3.6+
 - MySQL 8.0+
-- Redis 6.0+
 - Node.js 16+
 - npm 8+
 
+### 数据库初始化
+
+1. 创建数据库 `mental_health_system`。
+2. 执行根目录下的 `scheme.sql` 创建表结构。
+3. 执行根目录下的 `data.sql` 导入测试数据（包含默认管理员、咨询师和学生账号）。
+
 ### 后端启动
 
-1. 创建数据库
-```sql
-CREATE DATABASE mental_health_system CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-```
+1. 修改 `src/main/resources/application.yml` 中的数据库连接配置（URL, username, password）。
+2. 使用 Maven 构建并运行项目：
+   ```bash
+   mvn spring-boot:run
+   ```
+   或者在 IDE 中运行 `MentalHealthSystemApplication.java`。
 
-2. 修改配置文件
-```yaml
-# src/main/resources/application.yml
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/mental_health_system
-    username: your_username
-    password: your_password
-  data:
-    redis:
-      host: localhost
-      port: 6379
-```
+### 前端启动
+
+1. 进入前端目录：
+   ```bash
+   cd frontend
+   ```
+2. 安装依赖：
+   ```bash
+   npm install
+   ```
+3. 启动开发服务器：
+   ```bash
+   npm run dev
+   ```
+4. 访问 `http://localhost:5173`。
+
+## 默认账号
+
+| 角色 | 用户名 | 密码 | 说明 |
+| --- | --- | --- | --- |
+| 管理员 | admin | 123456 | 系统超级管理员 |
+| 咨询师 | counselor1 | 123456 | 示例咨询师账号 |
+| 学生 | student1 | 123456 | 示例学生账号 |
+
+## 开发日志
+
+- **2025-12-07**: 
+    - 完善安全设置功能，支持头像上传和密码修改。
+    - 修复收藏夹显示问题，优化咨询师信息展示。
+    - 更新数据库初始化脚本，提供完整的测试数据。
+
 
 3. 启动后端服务
 ```bash
