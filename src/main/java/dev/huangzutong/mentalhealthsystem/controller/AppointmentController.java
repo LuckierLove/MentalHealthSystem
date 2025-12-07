@@ -67,7 +67,7 @@ public class AppointmentController {
      * @return 更新结果
      */
     @PutMapping("/{id}")
-    public Result<Void> updateAppointment(@PathVariable Long id, @RequestBody CreateAppointmentReq req) {
+    public Result<Void> updateAppointment(@PathVariable Long id, @RequestBody Appointment req) {
         log.info("更新预约 {}", req);
         appointmentService.updateAppointment(id, req);
         return Result.success();

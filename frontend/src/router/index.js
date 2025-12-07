@@ -34,6 +34,67 @@ const routes = [
           requiresAuth: true 
         }
       }
+      ,
+      {
+        path: '/management/users',
+        name: 'UsersManagement',
+        component: () => import('@/views/management/Users.vue'),
+        meta: { title: '用户管理', requiresAuth: true }
+      },
+      {
+        path: '/management/roles',
+        name: 'RolesManagement',
+        component: () => import('@/views/management/Roles.vue'),
+        meta: { title: '角色管理', requiresAuth: true }
+      },
+      {
+        path: '/management/counselors',
+        name: 'CounselorsManagement',
+        component: () => import('@/views/management/Counselors.vue'),
+        meta: { title: '咨询师管理', requiresAuth: true }
+      },
+      {
+        path: '/management/treehole',
+        name: 'TreeholeManagement',
+        component: () => import('@/views/management/TreeholeManage.vue'),
+        meta: { title: '树洞管理', requiresAuth: true }
+      },
+      {
+        path: '/profile',
+        name: 'Profile',
+        component: () => import('@/views/main/Profile.vue'),
+        meta: { title: '个人中心', requiresAuth: true }
+      },
+      {
+        path: '/student/appointments',
+        name: 'StudentAppointments',
+        component: () => import('@/views/student/Appointments.vue'),
+        meta: { title: '我的预约', requiresAuth: true }
+      },
+      {
+        path: '/student/treehole',
+        name: 'StudentTreehole',
+        component: () => import('@/views/main/Treehole.vue'),
+        meta: { title: '心情树洞', requiresAuth: true }
+      },
+      {
+        path: '/counselor/appointments',
+        name: 'CounselorAppointments',
+        component: () => import('@/views/counselor/AppointmentManagement.vue'),
+        meta: { title: '预约管理', requiresAuth: true }
+      },
+      {
+        path: '/counselor/treehole',
+        name: 'CounselorTreehole',
+        component: () => import('@/views/main/Treehole.vue'),
+        meta: { title: '心情树洞', requiresAuth: true }
+      },
+      {
+        path: '/counselor/dialogs',
+        name: 'CounselorDialogRecords',
+        component: () => import('@/views/main/DialogRecords.vue'),
+        meta: { title: '咨询记录', requiresAuth: true }
+      }
       // 这里可以根据角色添加更多子路由
       // 管理员路由、咨询师路由、学生路由等
     ]

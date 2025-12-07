@@ -27,3 +27,26 @@ export function getRoleInfo(roleId) {
     method: 'get'
   })
 }
+
+export function createRole(data) {
+  return request({
+    url: '/role',
+    method: 'post',
+    data
+  })
+}
+
+export function updateRole(roleId, data) {
+  return request({
+    url: `/role/${roleId}`,
+    method: 'put',
+    data
+  })
+}
+
+export function deleteRole(roleId) {
+  return request({
+    url: `/role/${roleId}`,
+    method: 'delete'
+  })
+}

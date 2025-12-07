@@ -28,9 +28,10 @@
                 <el-icon><Setting /></el-icon>
                 <span>系统管理</span>
               </template>
-              <el-menu-item index="/admin/users">用户管理</el-menu-item>
-              <el-menu-item index="/admin/roles">角色管理</el-menu-item>
-              <el-menu-item index="/admin/permissions">权限管理</el-menu-item>
+              <el-menu-item index="/management/users">用户管理</el-menu-item>
+              <el-menu-item index="/management/roles">角色管理</el-menu-item>
+              <el-menu-item index="/management/counselors">咨询师管理</el-menu-item>
+              <el-menu-item index="/management/treehole">树洞管理</el-menu-item>
             </el-sub-menu>
           </template>
 
@@ -42,8 +43,12 @@
                 <span>咨询管理</span>
               </template>
               <el-menu-item index="/counselor/appointments">预约管理</el-menu-item>
-              <el-menu-item index="/counselor/records">咨询记录</el-menu-item>
+              <el-menu-item index="/counselor/dialogs">咨询记录</el-menu-item>
             </el-sub-menu>
+            <el-menu-item index="/counselor/treehole">
+              <el-icon><ChatDotRound /></el-icon>
+              <span>心情树洞</span>
+            </el-menu-item>
           </template>
 
           <!-- 学生菜单 -->
@@ -58,12 +63,6 @@
               <el-menu-item index="/student/treehole">心情树洞</el-menu-item>
             </el-sub-menu>
           </template>
-
-          <!-- 咨询服务（所有角色可见） -->
-          <el-menu-item index="/counselors">
-            <el-icon><User /></el-icon>
-            <span>咨询师列表</span>
-          </el-menu-item>
         </el-menu>
       </el-aside>
 
@@ -84,7 +83,6 @@
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item command="profile">个人中心</el-dropdown-item>
-                  <el-dropdown-item command="settings">设置</el-dropdown-item>
                   <el-dropdown-item divided command="logout">退出登录</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
@@ -124,8 +122,7 @@ const activeMenu = computed(() => route.path)
 
 // 用户信息显示
 const userInfo = computed(() => {
-  const roles = userStore.roles.join('、')
-  return roles || '用户'
+  return userStore.nickname || (userStore.roles.join('、') || '用户')
 })
 
 /**
@@ -142,9 +139,6 @@ function handleCommand(command) {
   switch (command) {
     case 'profile':
       router.push('/profile')
-      break
-    case 'settings':
-      router.push('/settings')
       break
     case 'logout':
       handleLogout()

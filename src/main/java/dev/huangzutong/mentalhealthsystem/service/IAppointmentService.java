@@ -25,7 +25,7 @@ public interface IAppointmentService extends IService<Appointment> {
      * @param id  预约id
      * @param req 修改预约请求参数
      */
-    void updateAppointment(Long id, CreateAppointmentReq req);
+    void updateAppointment(Long id, Appointment req);
 
     /**
      * 获取预约列表

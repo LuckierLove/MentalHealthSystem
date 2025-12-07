@@ -25,3 +25,11 @@ export function getRolePermissions(roleId) {
     method: 'get'
   })
 }
+
+export function updateRolePermissions(roleId, data) {
+  return request({
+    url: `/ps/${roleId}`,
+    method: 'put',
+    data
+  })
+}

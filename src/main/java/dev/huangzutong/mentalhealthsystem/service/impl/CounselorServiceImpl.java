@@ -47,6 +47,7 @@ public class CounselorServiceImpl extends ServiceImpl<CounselorMapper, Counselor
                 .setRating(new BigDecimal(5));
         counselorMapper.insert(counselor);
         String role_id = roleMapper.selectOne(new QueryWrapper<Role>().eq("name", "咨询师")).getId();
+        userRoleMapper.delete(new QueryWrapper<UserRole>().eq("user_id", counselor.getUserId()));
         userRoleMapper.insert(new UserRole().setUserId(counselor.getUserId()).setRoleId(role_id));
     }
 
@@ -63,6 +64,9 @@ public class CounselorServiceImpl extends ServiceImpl<CounselorMapper, Counselor
         userRoleMapper.delete(new QueryWrapper<UserRole>().eq("user_id", counselor.getUserId())
                 .eq("role_id", getCounselorId())
         );
+        userRoleMapper.insert(new UserRole().setUserId(counselor.getUserId()).setRoleId(
+                roleMapper.selectOne(new QueryWrapper<Role>().eq("name", "学生")).getId()
+        ));
     }
 
     /**

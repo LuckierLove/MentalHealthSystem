@@ -9,6 +9,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import dev.huangzutong.mentalhealthsystem.common.constant.UserMessageConstant;
 import dev.huangzutong.mentalhealthsystem.common.enums.UserRoleEnum;
 import dev.huangzutong.mentalhealthsystem.common.exception.UserException;
+import dev.huangzutong.mentalhealthsystem.entity.Counselor;
+import dev.huangzutong.mentalhealthsystem.entity.Role;
 import dev.huangzutong.mentalhealthsystem.entity.User;
 import dev.huangzutong.mentalhealthsystem.entity.UserRole;
 import dev.huangzutong.mentalhealthsystem.entity.req.CreateUserReq;
@@ -17,6 +19,7 @@ import dev.huangzutong.mentalhealthsystem.entity.req.RegisterReq;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetListVO;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetUserInfoVO;
 import dev.huangzutong.mentalhealthsystem.entity.vo.GetUserListVO;
+import dev.huangzutong.mentalhealthsystem.mapper.CounselorMapper;
 import dev.huangzutong.mentalhealthsystem.mapper.RoleMapper;
 import dev.huangzutong.mentalhealthsystem.mapper.UserMapper;
 import dev.huangzutong.mentalhealthsystem.mapper.UserRoleMapper;
@@ -42,6 +45,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private RoleMapper roleMapper;
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private CounselorMapper counselorMapper;
 
     /**
      * 注册
@@ -155,6 +160,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         User user = new User();
         BeanUtils.copyProperties(req, user);
         user.setId(userId);
+        if(StringUtils.isBlank(user.getPassword())) user.setPassword(null);
         updateById(user);
     }
 
