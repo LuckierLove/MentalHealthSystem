@@ -35,13 +35,12 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
     public void addAppointment(CreateAppointmentReq req) {
         String studentId = StpUtil.getLoginId().toString();
         Appointment appointment = Appointment.builder()
-                .id(new SnowflakeGenerator().next())
                 .counselorId(req.getCounselorId())
                 .studentId(studentId)
                 .appointmentTime(req.getAppointmentTime())
                 .type(req.getType())
                 .status(1)
-                .rating(5)
+                .rating(0)
                 .build();
         save(appointment);
     }
@@ -49,13 +48,11 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
     /**
      * 更新预约
      * @param id 预约id
-     * @param req 更新预约请求参数
+     * @param appointment 更新预约请求参数
      */
     @Override
-    public void updateAppointment(Long id, CreateAppointmentReq req) {
-        Appointment appointment = new Appointment();
+    public void updateAppointment(Long id, Appointment appointment) {
         appointment.setId(id);
-        BeanUtils.copyProperties(req, appointment);
         updateById(appointment);
     }
 
