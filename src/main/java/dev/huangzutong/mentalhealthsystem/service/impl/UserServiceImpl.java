@@ -229,5 +229,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if (!Validator.isEmail(req.getEmail())) {
             throw new UserException(UserMessageConstant.EMAIL_FORMAT_ERROR);
         }
+
+        // 判断用户是否存在
+        if(userMapper.selectOne(new QueryWrapper<User>().eq("username", req.getUsername())) != null){
+            throw new UserException(UserMessageConstant.USER_EXIST);
+        }
     }
 }

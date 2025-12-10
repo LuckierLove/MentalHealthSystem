@@ -12,4 +12,5 @@ public class UserMessageConstant {
     public static final String USER_NOT_EXIST = "用户不存在";
     public static final String PASSWORD_ERROR = "密码错误";
     public static final String NOT_LOGIN = "未登录";
+    public static final String USER_EXIST = "用户已存在";
 }
